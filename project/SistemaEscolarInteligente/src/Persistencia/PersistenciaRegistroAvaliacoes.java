@@ -14,7 +14,7 @@ public class PersistenciaRegistroAvaliacoes {
 
     private static final String CAMINHO_ARQUIVO = "registro_avaliacoes.dat";
 
-    public static void salvarRegistro(RegistroAvaliacoes registro) {
+    public static void salvar(RegistroAvaliacoes registro) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CAMINHO_ARQUIVO))) {
             oos.writeObject(registro);
             System.out.println("Registro de avaliações salvo com sucesso.");
@@ -23,7 +23,7 @@ public class PersistenciaRegistroAvaliacoes {
         }
     }
 
-    public static RegistroAvaliacoes carregarRegistro() {
+    public static RegistroAvaliacoes carregar() {
         File arquivo = new File(CAMINHO_ARQUIVO);
         if (!arquivo.exists()) {
             return new RegistroAvaliacoes(); // retorna novo se não existir

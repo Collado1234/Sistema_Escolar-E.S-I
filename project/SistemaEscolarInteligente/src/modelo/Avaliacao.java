@@ -15,9 +15,12 @@ public class Avaliacao {
     private int prova2;
     private int total_faltas;
 
-    public Avaliacao(Aluno aluno, Turma turma) {
+    public Avaliacao(Aluno aluno, Turma turma,int nota1,int nota2,int total_faltas) {
         this.aluno = aluno;
         this.turma = turma;
+        this.prova1 = nota1;
+        this.prova2 = nota2;
+        this.total_faltas = total_faltas;
     }
 
     public Aluno getAluno() {

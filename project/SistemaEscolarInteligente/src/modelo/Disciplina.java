@@ -41,5 +41,16 @@ public class Disciplina implements Serializable {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+    public int getCarga_horaria() {
+        return carga_horaria;
+    }
+
+    public void setCarga_horaria(int carga_horaria) {
+        this.carga_horaria = carga_horaria;
+    }
+    
+    
+    
 }
 
