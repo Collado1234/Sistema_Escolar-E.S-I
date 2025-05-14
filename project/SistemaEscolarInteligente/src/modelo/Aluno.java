@@ -3,12 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modelo;
-
+import java.io.Serializable;
 /**
  *
  * @author renna
  */
-public class Aluno {
+
+public class Aluno implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String nome_Aluno;
     private String matricula;
 
@@ -32,6 +35,4 @@ public class Aluno {
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
-    
-    
 }

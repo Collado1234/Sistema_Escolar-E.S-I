@@ -8,17 +8,26 @@ package modelo;
  *
  * @author renna
  */
-public class Avaliação {
+public class Avaliacao {
     private Aluno aluno;
     private Turma turma;
     private int prova1;
     private int prova2;
     private int total_faltas;
 
-    public Avaliação(Aluno aluno, Turma turma) {
+    public Avaliacao(Aluno aluno, Turma turma) {
         this.aluno = aluno;
         this.turma = turma;
     }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+    
 
     public int getProva1() {
         return prova1;
