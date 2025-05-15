@@ -14,27 +14,55 @@ import java.util.List;
  */
 public class PersistenciaCorpoDocente {
 
-    private static final String CAMINHO_ARQUIVO = "dados/corpoDocente.dat";
+    private static final String DIRETORIO = "dados";
+    private static final String NOME_ARQUIVO = "corpoDocente.dat";
+    private static final String CAMINHO_ARQUIVO = DIRETORIO + File.separator + NOME_ARQUIVO;
 
     public static void salvar(CorpoDocente corpoDocente) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CAMINHO_ARQUIVO))) {
-            oos.writeObject(corpoDocente);
+        try {
+            File dir = new File(DIRETORIO);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            File arquivo = new File(CAMINHO_ARQUIVO);
+            if (!arquivo.exists()) {
+                arquivo.createNewFile();
+            }
+
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arquivo))) {
+                oos.writeObject(corpoDocente);
+            }
+
         } catch (IOException e) {
+            System.err.println("Erro ao salvar CorpoDocente:");
             e.printStackTrace();
         }
     }
 
     public static CorpoDocente carregar() {
         File arquivo = new File(CAMINHO_ARQUIVO);
-        if (!arquivo.exists()) {
-            return new CorpoDocente(); // retorna um novo se não existir
+        if (!arquivo.exists() || arquivo.length() == 0) {
+            try {
+                File dir = new File(DIRETORIO);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                arquivo.createNewFile();
+            } catch (IOException e) {
+                System.err.println("Erro ao criar arquivo vazio:");
+                e.printStackTrace();
+            }
+
+            return new CorpoDocente();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CAMINHO_ARQUIVO))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
             return (CorpoDocente) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Erro ao carregar CorpoDocente:");
             e.printStackTrace();
-            return new CorpoDocente(); // fallback
+            return new CorpoDocente();
         }
     }
 }

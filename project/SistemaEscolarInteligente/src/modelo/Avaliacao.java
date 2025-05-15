@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modelo;
-
+import java.io.Serializable;
 /**
  *
  * @author renna
  */
-public class Avaliacao {
+public class Avaliacao implements Serializable{
     private Aluno aluno;
     private Turma turma;
     private int prova1;

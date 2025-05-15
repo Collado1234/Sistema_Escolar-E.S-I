@@ -2,7 +2,7 @@ package controlador;
 
 import modelo.*;
 import Persistencia.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controlador{
@@ -97,6 +97,35 @@ public class Controlador{
         PersistenciaRegistroAvaliacoes.salvar(registroAvaliacoes);
         return true;
     }
+    
+    public List<String> adicionarAlunosEmTurma(String codigoTurma, List<String> matriculas) {
+    Turma turma = registroTurmas.buscarPorCodigo(codigoTurma);
+    List<String> erros = new ArrayList<>();
+
+    if (turma == null) {
+        erros.add("Turma não encontrada.");
+        return erros;
+    }
+
+    for (String matricula : matriculas) {
+        Aluno aluno = corpoDocente.buscarAlunoPorMatricula(matricula.trim());
+
+        if (aluno == null) {
+            erros.add("Aluno com matrícula " + matricula + " não encontrado.");
+            continue;
+        }
+
+        if (turma.getAlunos().contains(aluno)) {
+            erros.add("Aluno com matrícula " + matricula + " já está na turma.");
+            continue;
+        }
+
+        turma.adicionarAluno(aluno);
+    }
+
+    PersistenciaRegistroTurmas.salvar(registroTurmas);
+    return erros; // Retorna lista vazia se tudo ok
+}
 
     //public void 
 
