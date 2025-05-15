@@ -6,6 +6,7 @@ package IU_Sistema;
 import java.util.Scanner;
 import modelo.*;
 import controlador.Controlador;
+import java.util.List;
 
 /**
  *  Classe onde desenvolveremos a interface do projeto
@@ -24,7 +25,8 @@ public class IU {
             System.out.println("3. Cadastrar Turma");
             System.out.println("4. Lançar Avaliação");
             System.out.println("5. Consultar Avaliações por Aluno");
-            System.out.println("6. Sair");
+            System.out.println("6. Adicionar Alunos à Turma (vários)");
+            System.out.println("7. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = Integer.parseInt(scanner.nextLine());
 
@@ -34,10 +36,11 @@ public class IU {
                 case 3 -> cadastrarTurma();
                 case 4 -> registrarAvaliacao();
                 case 5 -> consultarAvaliacoesPorAluno();
-                case 6 -> System.out.println("Encerrando o sistema...");
+                case 6 -> adicionarAlunosNaTurma();
+                case 7 -> System.out.println("Encerrando o sistema...");
                 default -> System.out.println("Opção inválida!");
             }
-        } while (opcao != 6);
+        } while (opcao != 7);
     }
 
     private static void cadastrarAluno() {
@@ -119,6 +122,24 @@ public class IU {
             for (Avaliacao a : avaliacoes) {
                 System.out.println("- Turma: " + a.getTurma().getCodigoTurma());
             }
+        }
+    }
+    
+    private static void adicionarAlunosNaTurma() {
+        System.out.print("Código da turma: ");
+        String codigoTurma = scanner.nextLine();
+
+        System.out.print("Matrículas dos alunos (separadas por vírgula): ");
+        String input = scanner.nextLine();
+        List<String> matriculas = List.of(input.split(","));
+
+        List<String> erros = controlador.adicionarAlunosEmTurma(codigoTurma, matriculas);
+
+        if (erros.isEmpty()) {
+            System.out.println("Todos os alunos foram adicionados com sucesso à turma.");
+        } else {
+            System.out.println("Alguns alunos não foram adicionados:");
+            erros.forEach(System.out::println);
         }
     }
 }
