@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Persistencia;
-import modelo.CorpoDocente;
+import modelo.Catalogo_CorpoDocente;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class PersistenciaCorpoDocente {
     private static final String NOME_ARQUIVO = "corpoDocente.dat";
     private static final String CAMINHO_ARQUIVO = DIRETORIO + File.separator + NOME_ARQUIVO;
 
-    public static void salvar(CorpoDocente corpoDocente) {
+    public static void salvar(Catalogo_CorpoDocente corpoDocente) {
         try {
             File dir = new File(DIRETORIO);
             if (!dir.exists()) {
@@ -40,7 +40,7 @@ public class PersistenciaCorpoDocente {
         }
     }
 
-    public static CorpoDocente carregar() {
+    public static Catalogo_CorpoDocente carregar() {
         File arquivo = new File(CAMINHO_ARQUIVO);
         if (!arquivo.exists() || arquivo.length() == 0) {
             try {
@@ -54,15 +54,15 @@ public class PersistenciaCorpoDocente {
                 e.printStackTrace();
             }
 
-            return new CorpoDocente();
+            return new Catalogo_CorpoDocente();
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-            return (CorpoDocente) ois.readObject();
+            return (Catalogo_CorpoDocente) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erro ao carregar CorpoDocente:");
             e.printStackTrace();
-            return new CorpoDocente();
+            return new Catalogo_CorpoDocente();
         }
     }
 }

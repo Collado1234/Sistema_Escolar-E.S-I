@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Persistencia;
-import modelo.RegistroAvaliacoes;
+import modelo.Catalogo_RegistroAvaliacoes;
 import java.io.*;
 
 /**
@@ -16,7 +16,7 @@ public class PersistenciaRegistroAvaliacoes {
     private static final String NOME_ARQUIVO = "registro_avaliacoes.dat";
     private static final String CAMINHO_ARQUIVO = DIRETORIO + File.separator + NOME_ARQUIVO;
 
-    public static void salvar(RegistroAvaliacoes registro) {
+    public static void salvar(Catalogo_RegistroAvaliacoes registro) {
         try {
             File dir = new File(DIRETORIO);
             if (!dir.exists()) {
@@ -38,7 +38,7 @@ public class PersistenciaRegistroAvaliacoes {
         }
     }
 
-    public static RegistroAvaliacoes carregar() {
+    public static Catalogo_RegistroAvaliacoes carregar() {
         File arquivo = new File(CAMINHO_ARQUIVO);
         if (!arquivo.exists() || arquivo.length() == 0) {
             try {
@@ -51,14 +51,14 @@ public class PersistenciaRegistroAvaliacoes {
                 System.err.println("Erro ao criar arquivo vazio: " + e.getMessage());
             }
 
-            return new RegistroAvaliacoes();
+            return new Catalogo_RegistroAvaliacoes();
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-            return (RegistroAvaliacoes) ois.readObject();
+            return (Catalogo_RegistroAvaliacoes) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erro ao carregar o registro de avaliações: " + e.getMessage());
-            return new RegistroAvaliacoes(); // fallback
+            return new Catalogo_RegistroAvaliacoes(); // fallback
         }
     }
 }

@@ -12,12 +12,12 @@ import java.util.List;
  */
 
 
-public class CorpoDocente implements Serializable {
+public class Catalogo_CorpoDocente implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Aluno> alunos;
 
-    public CorpoDocente() {
+    public Catalogo_CorpoDocente() {
         this.alunos = new ArrayList<>();
     }
 
@@ -32,6 +32,15 @@ public class CorpoDocente implements Serializable {
     public Aluno buscarAlunoPorMatricula(String matricula) {
         for (Aluno aluno : alunos) {
             if (aluno.getMatricula().equals(matricula)) {
+                return aluno;
+            }
+        }
+        return null;
+    }
+    
+    public Aluno buscarAlunoPorNome(String nome) {
+        for (Aluno aluno : alunos) {
+            if (aluno.getNome_Aluno().equals(nome)) {
                 return aluno;
             }
         }

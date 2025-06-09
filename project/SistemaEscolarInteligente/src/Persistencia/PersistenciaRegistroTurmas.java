@@ -1,6 +1,6 @@
 package Persistencia;
 
-import modelo.RegistroTurmas;
+import modelo.Catalogo_RegistroTurmas;
 
 import java.io.*;
 
@@ -10,7 +10,7 @@ public class PersistenciaRegistroTurmas {
     private static final String NOME_ARQUIVO = "registro_turmas.dat";
     private static final String CAMINHO_ARQUIVO = DIRETORIO + File.separator + NOME_ARQUIVO;
 
-    public static void salvar(RegistroTurmas registro) {
+    public static void salvar(Catalogo_RegistroTurmas registro) {
         try {
             File dir = new File(DIRETORIO);
             if (!dir.exists()) {
@@ -32,7 +32,7 @@ public class PersistenciaRegistroTurmas {
         }
     }
 
-    public static RegistroTurmas carregar() {
+    public static Catalogo_RegistroTurmas carregar() {
         File arquivo = new File(CAMINHO_ARQUIVO);
         if (!arquivo.exists() || arquivo.length() == 0) {
             try {
@@ -45,14 +45,14 @@ public class PersistenciaRegistroTurmas {
                 System.err.println("Erro ao criar arquivo vazio: " + e.getMessage());
             }
 
-            return new RegistroTurmas();
+            return new Catalogo_RegistroTurmas();
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-            return (RegistroTurmas) ois.readObject();
+            return (Catalogo_RegistroTurmas) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erro ao carregar o registro de turmas: " + e.getMessage());
-            return new RegistroTurmas();
+            return new Catalogo_RegistroTurmas();
         }
     }
 }

@@ -7,6 +7,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
     @author rennan
@@ -63,6 +64,16 @@ public class Turma implements Serializable {
     public void setDisciplina(Disciplina disciplina) {
         this.disciplina = disciplina;
     }
+    
+    public Aluno busca_Aluno_na_Turma(String matricula){
+        for(Aluno aluno : alunos){
+            if(aluno.getMatricula().equals(matricula)){
+                return aluno;
+            }
+        }
+        return null;       
+    }
+        
 
     @Override
     public String toString() {
