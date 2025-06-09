@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
  * @author renna
  */
 
-public class RegistroTurmas implements Serializable {
+public class Catalogo_RegistroTurmas implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Turma> turmas;
 
-    public RegistroTurmas() {
+    public Catalogo_RegistroTurmas() {
         this.turmas = new ArrayList<>();
     }
 
@@ -30,10 +30,24 @@ public class RegistroTurmas implements Serializable {
         return new ArrayList<>(turmas);
     }
 
-    public List<Turma> buscarPorDisciplina(Disciplina disciplina) {
-        return turmas.stream()
-                .filter(t -> t.getDisciplina().equals(disciplina))
-                .collect(Collectors.toList());
+    public List<Turma> buscarPorDisciplina(String codigoDisciplina) {
+        List<Turma> lista_turmas = new ArrayList<>();
+        for(Turma turma:turmas){
+            if(turma.getDisciplina().getCodigo().equals(codigoDisciplina)){
+                lista_turmas.add(turma);
+            }
+        }
+        return lista_turmas;
+    }
+    
+    public List<Turma> lista_Turmas_Aluno_Matriculado(String matricula){
+        List<Turma> lista_turmas = new ArrayList<>();
+        for(Turma turma:turmas){
+            if(turma.busca_Aluno_na_Turma(matricula)!=null){
+                lista_turmas.add(turma);
+            }
+        }
+        return lista_turmas;
     }
 
     public Turma buscarPorCodigo(String codigoTurma) {

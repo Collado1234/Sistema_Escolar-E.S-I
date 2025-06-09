@@ -1,6 +1,6 @@
 package Persistencia;
 
-import modelo.RegistroDisciplinas;
+import modelo.Catalogo_RegistroDisciplinas;
 
 import java.io.*;
 
@@ -14,7 +14,7 @@ public class PersistenciaRegistroDisciplinas {
     private static final String NOME_ARQUIVO = "registro_disciplinas.dat";
     private static final String CAMINHO_ARQUIVO = DIRETORIO + File.separator + NOME_ARQUIVO;
 
-    public static void salvar(RegistroDisciplinas registro) {
+    public static void salvar(Catalogo_RegistroDisciplinas registro) {
         try {
             File dir = new File(DIRETORIO);
             if (!dir.exists()) {
@@ -36,7 +36,7 @@ public class PersistenciaRegistroDisciplinas {
         }
     }
 
-    public static RegistroDisciplinas carregar() {
+    public static Catalogo_RegistroDisciplinas carregar() {
         File arquivo = new File(CAMINHO_ARQUIVO);
         if (!arquivo.exists() || arquivo.length() == 0) {
             try {
@@ -49,14 +49,14 @@ public class PersistenciaRegistroDisciplinas {
                 System.err.println("Erro ao criar arquivo vazio: " + e.getMessage());
             }
 
-            return new RegistroDisciplinas();
+            return new Catalogo_RegistroDisciplinas();
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-            return (RegistroDisciplinas) ois.readObject();
+            return (Catalogo_RegistroDisciplinas) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erro ao carregar o registro de disciplinas: " + e.getMessage());
-            return new RegistroDisciplinas(); // fallback seguro
+            return new Catalogo_RegistroDisciplinas(); // fallback seguro
         }
     }
 }

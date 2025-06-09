@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
  *
  * @author renna
  */
-public class RegistroAvaliacoes implements Serializable {
+public class Catalogo_RegistroAvaliacoes implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Avaliacao> avaliacoes;
 
-    public RegistroAvaliacoes() {
+    public Catalogo_RegistroAvaliacoes() {
         this.avaliacoes = new ArrayList<>();
     }
 

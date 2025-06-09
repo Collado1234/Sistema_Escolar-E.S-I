@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
  *
  * @author renna
  */
-public class RegistroDisciplinas implements Serializable {
+public class Catalogo_RegistroDisciplinas implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Disciplina> disciplinas;
 
-    public RegistroDisciplinas() {
+    public Catalogo_RegistroDisciplinas() {
         this.disciplinas = new ArrayList<>();
     }
 
