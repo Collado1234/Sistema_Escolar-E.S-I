@@ -31,11 +31,12 @@ public class Avaliacao implements Serializable{
         return turma;
     }
     
-    public float calcFrequencia(){
-        float freq = 1 - (total_faltas/ turma.getDisciplina().getCarga_horaria());
-        freq = freq*100;
+    public float calcFrequencia() {
+        float freq = 1 - ((float) total_faltas / turma.getDisciplina().getCarga_horaria());
+        freq = freq * 100;
         return freq;
     }
+
 
     public float getProva1() {
         return prova1;
@@ -43,6 +44,10 @@ public class Avaliacao implements Serializable{
     
     public float getProva2() {
         return prova2;
+    }
+    
+    public float getMedia(){
+        return (prova1+prova2)/2;
     }
 
     public void setProva1(float prova1) {
@@ -61,6 +66,31 @@ public class Avaliacao implements Serializable{
     public void setTotal_faltas(int total_faltas) {
         this.total_faltas = total_faltas;
     }
+        
+    public boolean estaAprovado(){
+        Constantes c = Constantes.getInstancia();
+        if(getMedia() < c.getNota__de_corte() || calcFrequencia() < c.getFrequencia_minima()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return "Avaliacao{" +
+               "Aluno='" + aluno.getNome_Aluno() + " (" + aluno.getMatricula() + ")', " +
+               "Turma='" + turma.getCodigoTurma()+ " - " + turma.getDisciplina().getNome() + "', " +
+               "Nota 1=" + prova1 + ", " +
+               "Nota 2=" + prova2 + ", " +
+               "Média=" + getMedia() + ", " +
+               "Frequência=" + String.format("%.2f", calcFrequencia()) + "%, " +
+               "Faltas=" + total_faltas + ", " +
+               "Situação=" + (estaAprovado() ? "Aprovado" : "Reprovado") +
+               "}";
+    }
+
+    
     
     
 }

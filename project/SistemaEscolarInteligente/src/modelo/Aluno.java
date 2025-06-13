@@ -35,4 +35,13 @@ public class Aluno implements Serializable {
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
+    
+    @Override
+    public String toString() {
+        return "Aluno{" +
+               "matrícula='" + matricula + '\'' +
+               ", nome='" + nome_Aluno + '\'' +
+               '}';
+}
+
 }

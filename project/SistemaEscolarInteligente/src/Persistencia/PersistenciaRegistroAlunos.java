@@ -3,22 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Persistencia;
-import modelo.Catalogo_CorpoDocente;
+import modelo.Catalogo_RegistroAlunos;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+
 /**
  *
  * @author renna
  */
-public class PersistenciaCorpoDocente {
+public class PersistenciaRegistroAlunos {
 
     private static final String DIRETORIO = "dados";
-    private static final String NOME_ARQUIVO = "corpoDocente.dat";
+    private static final String NOME_ARQUIVO = "registro_alunos.dat";
     private static final String CAMINHO_ARQUIVO = DIRETORIO + File.separator + NOME_ARQUIVO;
 
-    public static void salvar(Catalogo_CorpoDocente corpoDocente) {
+    public static void salvar(Catalogo_RegistroAlunos corpoDocente) {
         try {
             File dir = new File(DIRETORIO);
             if (!dir.exists()) {
@@ -40,7 +39,7 @@ public class PersistenciaCorpoDocente {
         }
     }
 
-    public static Catalogo_CorpoDocente carregar() {
+    public static Catalogo_RegistroAlunos carregar() {
         File arquivo = new File(CAMINHO_ARQUIVO);
         if (!arquivo.exists() || arquivo.length() == 0) {
             try {
@@ -54,15 +53,15 @@ public class PersistenciaCorpoDocente {
                 e.printStackTrace();
             }
 
-            return new Catalogo_CorpoDocente();
+            return new Catalogo_RegistroAlunos();
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-            return (Catalogo_CorpoDocente) ois.readObject();
+            return (Catalogo_RegistroAlunos) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erro ao carregar CorpoDocente:");
             e.printStackTrace();
-            return new Catalogo_CorpoDocente();
+            return new Catalogo_RegistroAlunos();
         }
     }
 }

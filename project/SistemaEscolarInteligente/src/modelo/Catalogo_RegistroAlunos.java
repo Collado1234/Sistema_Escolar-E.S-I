@@ -12,12 +12,12 @@ import java.util.List;
  */
 
 
-public class Catalogo_CorpoDocente implements Serializable {
+public class Catalogo_RegistroAlunos implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Aluno> alunos;
 
-    public Catalogo_CorpoDocente() {
+    public Catalogo_RegistroAlunos() {
         this.alunos = new ArrayList<>();
     }
 
