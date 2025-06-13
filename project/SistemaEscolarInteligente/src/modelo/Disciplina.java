@@ -50,6 +50,15 @@ public class Disciplina implements Serializable {
         this.carga_horaria = carga_horaria;
     }
     
+    @Override
+    public String toString() {
+        return "Disciplina{" +
+               "Código='" + codigo + '\'' +
+               ", Nome='" + nome + '\'' +
+               ", Carga Horária=" + carga_horaria +
+               '}';
+    }
+
     
     
 }

@@ -1,184 +1,167 @@
 package modelo;
-
-import modelo.*;
-import Persistencia.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controlador{
 
-    private Catalogo_CorpoDocente corpoDocente;
-    private Catalogo_RegistroDisciplinas registroDisciplinas;
-    private Catalogo_RegistroTurmas registroTurmas;
-    private Catalogo_RegistroAvaliacoes registroAvaliacoes;
+    private ServicoCatalogoGeral servico;
 
     public Controlador() {
-        this.corpoDocente = PersistenciaCorpoDocente.carregar();
-        this.registroDisciplinas = PersistenciaRegistroDisciplinas.carregar();
-        this.registroTurmas = PersistenciaRegistroTurmas.carregar();
-        this.registroAvaliacoes = PersistenciaRegistroAvaliacoes.carregar();
-    }
+        this.servico = new ServicoCatalogoGeral(); //carrega os dados
+    }        
 
-    // ------------------- Aluno -------------------
+    // ------------------- Cadastros -------------------
     public boolean cadastrarAluno(String nome, String matricula) {
-       // Verifica se já existe um aluno com a mesma matrícula
-        boolean existe = corpoDocente.getAlunos().stream().anyMatch(a -> a.getMatricula().equals(matricula));
-
-        if (existe) return false;
-
-        // Só cria e adiciona o aluno se não existir
-        Aluno aluno = new Aluno(nome, matricula);
-        corpoDocente.adicionarAluno(aluno);
-        PersistenciaCorpoDocente.salvar(corpoDocente);
-        return true;
-    }
-
-    public List<Aluno> listarAlunos() {
-        return corpoDocente.getAlunos();
-    }
-
-    public Aluno buscarAlunoPorMatricula(String matricula){
-        return corpoDocente.buscarAlunoPorMatricula(matricula);
-    }
-  
-    public Aluno buscarAlunoNome(String nome){
-        return corpoDocente.buscarAlunoPorNome(nome);
+        try {
+            Aluno aluno = new Aluno(nome, matricula);
+            servico.adicionarAluno(aluno);
+            return true;
+        }catch(IllegalArgumentException e){
+            return false;
+        }
     }
     
-    public List<Turma> turmasAlunoCadastrado(String matricula){
-        return registroTurmas.lista_Turmas_Aluno_Matriculado(matricula);
-    }
-    
-    // ------------------- Disciplina -------------------
     public boolean cadastrarDisciplina(String nome, String codigoDisciplina, int cargaHoraria) {
-        // Verifica se já existe uma disciplina com o mesmo código
-        boolean existe = registroDisciplinas.listarDisciplinas().stream()
-            .anyMatch(d -> d.getCodigo().equals(codigoDisciplina));
-
-        if (existe) return false;
-
-        // Só cria e adiciona se não existir
-        Disciplina disciplina = new Disciplina(nome, codigoDisciplina, cargaHoraria);
-        registroDisciplinas.adicionarDisciplina(disciplina);
-        PersistenciaRegistroDisciplinas.salvar(registroDisciplinas);
-        return true;
-    }
-
-    public List<Disciplina> listarDisciplinas() {
-        return registroDisciplinas.listarDisciplinas();
+        try{
+            Disciplina disciplina = new Disciplina(nome,codigoDisciplina,cargaHoraria);
+            servico.adicionarDisciplina(disciplina);
+            return true;
+        }catch(IllegalArgumentException e){
+            return false;
+        }       
     }
     
-    public Disciplina buscarDisciplina(String codigo){
-        return registroDisciplinas.buscarPorCodigo(codigo);        
-    }
-    
-    public List<Turma> turmas_vinculadas_disciplina(String codigoDisciplina){
-        return registroTurmas.buscarPorDisciplina(codigoDisciplina);
-    }
-    
-    // ------------------- Turma -------------------
     public boolean cadastrarTurma(String nomeTurma, String codigoTurma, String codigoDisciplina) {
-        // Verifica se já existe turma com esse código
-        boolean existe = registroTurmas.listarTurmas().stream()
-            .anyMatch(t -> t.getCodigoTurma().equals(codigoTurma));
+        try {
+            // Verifica se a disciplina existe usando o serviço
+            Disciplina disciplina = servico.buscarDisciplina(codigoDisciplina);
+            if (disciplina == null) return false;
 
-        if (existe) return false;
+            // Cria a turma
+            Turma turma = new Turma(nomeTurma, codigoTurma, disciplina);
 
-        // Busca a disciplina correspondente
-        Disciplina disciplina = registroDisciplinas.listarDisciplinas().stream()
-            .filter(d -> d.getCodigo().equals(codigoDisciplina))
-            .findFirst()
-            .orElse(null);
-
-        if (disciplina == null) return false; // Disciplina não encontrada
-
-        // Cria e persiste a nova turma
-        Turma turma = new Turma(nomeTurma,codigoTurma, disciplina);
-        registroTurmas.adicionarTurma(turma);
-        PersistenciaRegistroTurmas.salvar(registroTurmas);
-        return true;
-}
-
-    public List<Turma> listarTurmas() {
-        return registroTurmas.listarTurmas();
+            // Tenta adicionar via serviço
+            servico.adicionarTurma(turma);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
     
-    public Turma buscarTurmaPorCodigo(String codigoTurma){
-        return registroTurmas.buscarPorCodigo(codigoTurma);
+    public boolean cadastrarAvaliacao(String codAluno, String codTurma, float nota1, float nota2, int faltas) {
+        try {
+            Aluno aluno = servico.buscarAlunoPorMatricula(codAluno);
+            Turma turma = servico.buscarTurmaPorCodigo(codTurma);
+
+            if (aluno == null || turma == null) {
+                System.out.println("Aluno ou turma não encontrados.");
+                return false;
+            }
+
+            Avaliacao avaliacao = new Avaliacao(aluno, turma, nota1, nota2, faltas);
+            servico.adicionarAvaliacao(avaliacao);
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao cadastrar avaliação: " + e.getMessage());
+            return false;
+        }
     }
     
-    public List<Aluno> buscarAlunosTurma(String codigo){
-        return registroTurmas.buscarPorCodigo(codigo).getAlunos();
+    public List<String> cadastrarAlunosEmTurma(String codigoTurma, List<String> matriculas) {
+        return servico.adicionarAlunosEmTurma(codigoTurma, matriculas);
     }
 
-    // ------------------- Avaliação -------------------
-    public boolean lancarAvaliacao(Aluno aluno, Turma turma, float nota1, float nota2, int faltas) {
-        // Verifica se já existe uma avaliação para esse aluno na turma
-        boolean existe = registroAvaliacoes.listarAvaliacoes().stream()
-            .anyMatch(a -> a.getAluno().equals(aluno) && a.getTurma().equals(turma));
+    //------------------ Buscas ---------------
+    
+    public String buscarAlunoPorMatricula(String matricula) {
+        Aluno aluno = servico.buscarAlunoPorMatricula(matricula);
+        return aluno != null ? aluno.toString() : "Aluno não encontrado.";
+    }
 
-        if (existe) return false;
+
+    public String buscarAlunoNome(String nome) {
+        Aluno aluno = servico.buscarAlunoNome(nome);
+        return aluno != null ? aluno.toString() : "Aluno não encontrado.";
+    }
+
+    public String buscarDisciplina(String codigo) {
+        Disciplina d = servico.buscarDisciplina(codigo);
+        return d != null ? d.toString() : "Disciplina não encontrada.";
+    }
+
+    public String buscarTurmaPorCodigo(String codigoTurma) {
+        Turma turma = servico.buscarTurmaPorCodigo(codigoTurma);
+        return turma != null ? turma.toString() : "Turma não encontrada.";
+    }
+
+    public List<String> buscarAlunosTurma(String codigo) {
+        return servico.buscarAlunosTurma(codigo).stream()
+                      .map(Aluno::toString)
+                      .toList();
+    }
+
+    public List<String> buscarAvaliacoesPorAluno(String codigoAluno) {
+        return servico.buscarAvaliacoesPorAluno(codigoAluno).stream()
+                      .map(Avaliacao::toString)
+                      .toList();
+    }
+
+    public List<String> buscarAvaliacoesPorTurma(String codigoTurma) {
+        return servico.buscarAvaliacoesPorTurma(codigoTurma).stream()
+                      .map(Avaliacao::toString)
+                      .toList();
+    }
+
+    public List<String> buscarAvaliacoesPorAlunoETurma(String codigo_aluno, String codigo_turma) {
+        return servico.buscarAvaliacoesPorAlunoETurma(codigo_aluno,codigo_turma).stream()
+                      .map(Avaliacao::toString)
+                      .toList();
+    }
+    
+    
+    //------------------------- Listagem ---------------------------
+    
+    public List<String> listarAlunosFormatados() {
+        return servico.listarAlunos().stream()
+                      .map(Aluno::toString)  // ou um formato mais específico
+                      .toList();
+    }
         
-        if(nota1 < 0 || nota1 > 10 || nota2 < 0 || nota2 > 10 ){
-            System.out.println("Erro: Valor de Notas invalidas");
-            return false;
-        }
-        if(faltas < 0 || faltas > turma.getDisciplina().getCarga_horaria()){  //violacao principio de demeter, estudar melhoria
-            System.out.println("Erro: Quantidade de Faltas Invalidas");
-            return false;
-        }
-        Avaliacao avaliacao = new Avaliacao(aluno, turma, nota1, nota2, faltas);
-        registroAvaliacoes.adicionarAvaliacao(avaliacao);
-        PersistenciaRegistroAvaliacoes.salvar(registroAvaliacoes);
-        return true;
+    public List<String> listarDisciplinasFormatadas() {
+        return servico.listarDisciplinas().stream()
+                      .map(Disciplina::toString)  // ou um formato mais específico
+                      .toList();
     }
     
-    public List<Avaliacao> listarAvaliacoes(){
-        return registroAvaliacoes.listarAvaliacoes();
+    public List<String> listarTurmasFormatadas() {
+        return servico.listarTurmas().stream()
+                      .map(Turma::toString)  // ou um formato mais específico
+                      .toList();
+    }            
+
+    public List<String> listarAvaliacoesFormatadas() {
+        return servico.listarAvaliacoes().stream()
+                      .map(Avaliacao::toString)  // ou um formato mais específico
+                      .toList();
     }
     
+    public List<String> listarTurmasAlunoCadastrado(String matricula){
+        return servico.listarTurmasAluno(matricula).stream()
+                .map(Turma::toString).toList();
+    }
     
-    public List<String> adicionarAlunosEmTurma(String codigoTurma, List<String> matriculas) {
-        Turma turma = registroTurmas.buscarPorCodigo(codigoTurma);
-        List<String> erros = new ArrayList<>();
-
-        if (turma == null) {
-            erros.add("Turma não encontrada.");
-            return erros;
-        }
-
-        for (String matricula : matriculas) {
-            Aluno aluno = corpoDocente.buscarAlunoPorMatricula(matricula.trim());
-
-            if (aluno == null) {
-                erros.add("Aluno com matrícula " + matricula + " não encontrado.");
-                continue;
-            }
-
-            if (turma.getAlunos().contains(aluno)) {
-                erros.add("Aluno com matrícula " + matricula + " já está na turma.");
-                continue;
-            }
-
-            turma.adicionarAluno(aluno);
-        }
-
-        PersistenciaRegistroTurmas.salvar(registroTurmas);
-        return erros; // Retorna lista vazia se tudo ok
-}
-
-    //public void 
-
-    public List<Avaliacao> buscarAvaliacoesPorAluno(Aluno aluno) {
-        return registroAvaliacoes.buscarPorAluno(aluno);
+    public List<String> listarTurmasPorDisciplina(String codigoDisciplina){
+        return servico.listarTurmasPorDisciplina(codigoDisciplina).stream()
+                .map(Turma::toString).toList();
+    }
+    
+    //----------------- Relatorio ---------------------
+    
+    public String gerarRelatorioTurma(String codigoTurma) {
+        return servico.gerarRelatorioTurma(codigoTurma);
     }
 
-//    public List<Avaliacao> buscarAvaliacoesPorTurma(String matricula) {;;
-//       // return registroAvaliacoes.buscarPorTurma(turma);
-//    }
-
-    public List<Avaliacao> buscarAvaliacoesPorAlunoETurma(Aluno aluno, Turma turma) {
-        return registroAvaliacoes.buscarPorAlunoETurma(aluno, turma);
-    }
-                      
+    public String gerarRelatorioDisciplina(String codigoDisciplina) {
+        return servico.gerarRelatorioDisciplina(codigoDisciplina);
+    }        
+                
 }
