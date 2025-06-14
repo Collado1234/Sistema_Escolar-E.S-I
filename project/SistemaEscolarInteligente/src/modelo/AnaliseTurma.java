@@ -21,7 +21,7 @@ public class AnaliseTurma extends AnaliseEstatisticaBase implements Interface_An
 
     @Override
     protected boolean pertence(Avaliacao avaliacao) {
-        return avaliacao.getTurma().equals(turma);
+        return avaliacao.getTurma().getCodigoTurma().equals(turma.getCodigoTurma());
     }
 
     @Override
