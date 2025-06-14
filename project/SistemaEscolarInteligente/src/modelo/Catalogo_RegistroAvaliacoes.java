@@ -6,7 +6,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 
 /**
  *
@@ -29,22 +29,35 @@ public class Catalogo_RegistroAvaliacoes implements Serializable {
         return new ArrayList<>(avaliacoes);
     }
 
-    public List<Avaliacao> buscarPorAluno(Aluno aluno) {
-        return avaliacoes.stream()
-                .filter(av -> av.getAluno().equals(aluno))
-                .collect(Collectors.toList());
+    public List<Avaliacao> buscarPorAluno(String codigoAluno) {
+        List<Avaliacao> lista_avaliacao = new ArrayList<>();
+        for(Avaliacao  avaliacao : this.avaliacoes){
+            if(avaliacao.getAluno().getMatricula().equals(codigoAluno)){
+                lista_avaliacao.add(avaliacao);
+            }
+        }
+        return lista_avaliacao;
+    }    
+
+    public List<Avaliacao> buscarPorTurma(String codigoTurma) { ///////////////////////// aqui, testar mudança
+        List<Avaliacao> lista_avaliacao = new ArrayList<>();
+        for(Avaliacao  avaliacao : this.avaliacoes){
+            if(avaliacao.getTurma().getCodigoTurma().equals(codigoTurma)){
+                lista_avaliacao.add(avaliacao);
+            }
+        }
+        return lista_avaliacao;
     }
 
-    public List<Avaliacao> buscarPorTurma(Turma turma) {
-        return avaliacoes.stream()
-                .filter(av -> av.getTurma().equals(turma))
-                .collect(Collectors.toList());
-    }
 
-    public List<Avaliacao> buscarPorAlunoETurma(Aluno aluno, Turma turma) {
-        return avaliacoes.stream()
-                .filter(av -> av.getAluno().equals(aluno) && av.getTurma().equals(turma))
-                .collect(Collectors.toList());
+    public List<Avaliacao> buscarPorAlunoETurma(String codigoAluno, String codigoTurma) {
+        List<Avaliacao> lista_avaliacao = new ArrayList<>();
+        for(Avaliacao  avaliacao : this.avaliacoes){
+            if(avaliacao.getTurma().getCodigoTurma().equals(codigoTurma) && avaliacao.getAluno().getMatricula().equals(codigoAluno)){
+                lista_avaliacao.add(avaliacao);
+            }
+        }
+        return lista_avaliacao;
     }
 
     public void limparAvaliacoes() {

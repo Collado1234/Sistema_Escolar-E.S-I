@@ -151,7 +151,11 @@ public class NewIU {
         String codigo = scanner.nextLine();
         System.out.print("Nome do aluno: ");
         String nome = scanner.nextLine();
-        controlador.cadastrarAluno(nome, codigo);
+        Boolean flag = controlador.cadastrarAluno(nome, codigo);
+        if(flag == false){
+            System.out.println("Erro ao cadastrar aluno. Matrícula já existe.");
+            return;
+        }
         System.out.println("Aluno cadastrado com sucesso.");
     }
     
@@ -162,7 +166,11 @@ public class NewIU {
         String codigoTurma = scanner.nextLine();
         System.out.print("Código da disciplinea: ");
         String codigoDisciplina = scanner.nextLine();        
-        controlador.cadastrarTurma(nome, codigoTurma, codigoDisciplina);
+        Boolean flag = controlador.cadastrarTurma(nome, codigoTurma, codigoDisciplina);
+        if (flag == false) {
+            System.out.println("Erro ao cadastrar turma. Código já existe ou disciplina não encontrada.");
+            return;
+        }
         System.out.println("Turma cadastrada com sucesso.");
     }
     
@@ -173,7 +181,11 @@ public class NewIU {
         String nome = scanner.nextLine();
         System.out.print("Carga horaria da disciplina: ");
         int cargaHoraria = lerInteiro("Carga horária da disciplina: ");
-        controlador.cadastrarDisciplina(nome, codigo, cargaHoraria);
+        Boolean flag = controlador.cadastrarDisciplina(nome, codigo, cargaHoraria);
+        if (flag == false) {
+            System.out.println("Erro ao cadastrar disciplina. Código já existe.");
+            return;
+        }
         System.out.println("Disciplina cadastrada com sucesso.");
     }
      

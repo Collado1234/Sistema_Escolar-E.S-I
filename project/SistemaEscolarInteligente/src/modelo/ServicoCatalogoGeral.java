@@ -130,19 +130,18 @@ public class ServicoCatalogoGeral {
     }
     
     public List<Avaliacao> buscarAvaliacoesPorAluno(String codigoAluno) {
-        Aluno aluno = buscarAlunoPorMatricula(codigoAluno);
-        return avaliacoes.buscarPorAluno(aluno);
+        return avaliacoes.buscarPorAluno(codigoAluno);
     }
 
     public List<Avaliacao> buscarAvaliacoesPorTurma(String codigoTurma) {
-        Turma turma = buscarTurmaPorCodigo(codigoTurma);
-        return avaliacoes.buscarPorTurma(turma);
+        //Turma turma = buscarTurmaPorCodigo(codigoTurma);
+        return avaliacoes.buscarPorTurma(codigoTurma);
     }
 
     public List<Avaliacao> buscarAvaliacoesPorAlunoETurma(String codigoAluno, String codigoTurma) {
-        Aluno alunoEncontrado = alunos.buscarAlunoPorMatricula(codigoAluno);
-        Turma turmaEncontrada = turmas.buscarPorCodigo(codigoTurma);
-        return avaliacoes.buscarPorAlunoETurma(alunoEncontrado, turmaEncontrada);
+        // Aluno alunoEncontrado = alunos.buscarAlunoPorMatricula(codigoAluno);
+        // Turma turmaEncontrada = turmas.buscarPorCodigo(codigoTurma);
+        return avaliacoes.buscarPorAlunoETurma(codigoAluno, codigoTurma);
     }
 
     // ----------- Listagem --------------
@@ -174,8 +173,9 @@ public class ServicoCatalogoGeral {
     public String gerarRelatorioTurma(String codigoTurma) {
         Turma turma = turmas.buscarPorCodigo(codigoTurma);
         if (turma == null) return "Turma não encontrada.";
-
-        AnaliseEstatisticaBase analise = new AnaliseTurma(turma, avaliacoes.listarAvaliacoes());
+        List<Avaliacao> avaliacoesTurma = avaliacoes.buscarPorTurma(codigoTurma);
+        if(avaliacoesTurma == null || avaliacoesTurma.isEmpty()) return "Nenhuma avaliação encontrada para a turma.";
+        AnaliseEstatisticaBase analise = new AnaliseTurma(turma, avaliacoesTurma);
         return analise.gerarRelatorio();
     }
 

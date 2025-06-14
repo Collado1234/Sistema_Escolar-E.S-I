@@ -21,7 +21,7 @@ public class AnaliseDIsciplina extends AnaliseEstatisticaBase implements Interfa
 
     @Override
     protected boolean pertence(Avaliacao avaliacao) {
-        return avaliacao.getTurma().getDisciplina().equals(disciplina);
+        return avaliacao.getTurma().getDisciplina().getCodigo().equals(disciplina.getCodigo());
     }
 
     @Override
