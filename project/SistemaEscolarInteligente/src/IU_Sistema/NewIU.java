@@ -107,8 +107,7 @@ public class NewIU {
             System.out.println("6. Buscar Avaliações por Aluno");
             System.out.println("7. Buscar Avaliações por Turma");
             System.out.println("0. Voltar");
-            System.out.print("Escolha uma opção: ");
-            opcao = lerOpcaoInt("Escolha uma opção", 7);            
+            opcao = lerOpcaoInt("Escolha uma opção: ", 7);            
 
             switch (opcao) {
                 case 1 -> buscarAlunoPorMatricula();
