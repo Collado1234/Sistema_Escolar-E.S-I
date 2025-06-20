@@ -10,7 +10,12 @@ package IU_Sistema;
  */
 public class Main {   
     public static void main(String[] args) {
-        NewIU sistema = new NewIU();
-        sistema.executar();
+//        NewIU sistema = new NewIU();
+//        sistema.executar();
+        
+        InterfaceGrafica principal = new InterfaceGrafica();
+        principal.setVisible(true);
+        principal.setTitle("Sistema de Avaliação de Desempenho");
+        principal.toFront();
     }
 }
