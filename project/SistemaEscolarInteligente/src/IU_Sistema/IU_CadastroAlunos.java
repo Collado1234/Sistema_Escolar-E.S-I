@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package IU_Sistema;
+import modelo.Controlador;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,9 +33,9 @@ public class IU_CadastroAlunos extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        InputMatricula = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        inputNome = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
@@ -44,11 +46,16 @@ public class IU_CadastroAlunos extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Cadastrar Aluno");
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(InputMatricula);
 
-        jScrollPane2.setViewportView(jTextPane2);
+        jScrollPane2.setViewportView(inputNome);
 
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,8 +112,30 @@ public class IU_CadastroAlunos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nome = inputNome.getText().trim();
+        String matricula = InputMatricula.getText().trim();
+    
+        if (nome.isEmpty() || matricula.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Controlador c = Controlador.getInstancia();
+        boolean sucesso = c.cadastrarAluno(nome, matricula);
+
+        if (sucesso) {
+            JOptionPane.showMessageDialog(this, "Aluno cadastrado com sucesso!");
+            this.dispose(); // Fecha a janela
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro: matrícula já existente ou dados inválidos.", "Erro no cadastro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane InputMatricula;
+    private javax.swing.JTextPane inputNome;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -114,7 +143,5 @@ public class IU_CadastroAlunos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
     // End of variables declaration//GEN-END:variables
 }

@@ -143,7 +143,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="jTextPane3">
+            <Component class="javax.swing.JTextPane" name="inputMatricula">
             </Component>
           </SubComponents>
         </Container>
@@ -154,7 +154,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="jTextPane4">
+            <Component class="javax.swing.JTextPane" name="inputCodigoTurma">
             </Component>
           </SubComponents>
         </Container>
@@ -162,6 +162,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -185,7 +188,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="jTextPane5">
+            <Component class="javax.swing.JTextPane" name="inputP2">
             </Component>
           </SubComponents>
         </Container>
@@ -196,7 +199,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="jTextPane6">
+            <Component class="javax.swing.JTextPane" name="inputQtdFaltas">
             </Component>
           </SubComponents>
         </Container>
@@ -207,7 +210,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="jTextPane7">
+            <Component class="javax.swing.JTextPane" name="inputP1">
             </Component>
           </SubComponents>
         </Container>

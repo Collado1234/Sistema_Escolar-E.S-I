@@ -4,11 +4,20 @@ import java.util.List;
 public class Controlador{
 
     private ServicoCatalogoGeral servico;
+    private static Controlador instancia;
 
     public Controlador() {
         this.servico = new ServicoCatalogoGeral(); //carrega os dados
     }        
-
+    
+     // Método público para obter a instância única
+    public static Controlador getInstancia() {
+        if (instancia == null) {
+            instancia = new Controlador();
+        }
+        return instancia;
+    }
+    
     // ------------------- Cadastros -------------------
     public boolean cadastrarAluno(String nome, String matricula) {
         try {

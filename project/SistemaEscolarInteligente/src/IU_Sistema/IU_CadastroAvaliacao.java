@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package IU_Sistema;
-
+import javax.swing.JOptionPane;
+import modelo.Controlador;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author renna
@@ -31,19 +34,19 @@ public class IU_CadastroAvaliacao extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane3 = new javax.swing.JTextPane();
+        inputMatricula = new javax.swing.JTextPane();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextPane4 = new javax.swing.JTextPane();
+        inputCodigoTurma = new javax.swing.JTextPane();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextPane5 = new javax.swing.JTextPane();
+        inputP2 = new javax.swing.JTextPane();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTextPane6 = new javax.swing.JTextPane();
+        inputQtdFaltas = new javax.swing.JTextPane();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTextPane7 = new javax.swing.JTextPane();
+        inputP1 = new javax.swing.JTextPane();
 
         setClosable(true);
 
@@ -55,11 +58,16 @@ public class IU_CadastroAvaliacao extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Cadastrar  Avaliação");
 
-        jScrollPane3.setViewportView(jTextPane3);
+        jScrollPane3.setViewportView(inputMatricula);
 
-        jScrollPane4.setViewportView(jTextPane4);
+        jScrollPane4.setViewportView(inputCodigoTurma);
 
         jButton2.setText("Salvar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Nota da P1:");
 
@@ -67,11 +75,11 @@ public class IU_CadastroAvaliacao extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Total de Faltas:");
 
-        jScrollPane5.setViewportView(jTextPane5);
+        jScrollPane5.setViewportView(inputP2);
 
-        jScrollPane6.setViewportView(jTextPane6);
+        jScrollPane6.setViewportView(inputQtdFaltas);
 
-        jScrollPane7.setViewportView(jTextPane7);
+        jScrollPane7.setViewportView(inputP1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -153,8 +161,48 @@ public class IU_CadastroAvaliacao extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String codigoTurma = inputCodigoTurma.getText().trim();
+        String codigoAluno = inputMatricula.getText().trim();
+        String strNota1 = inputP1.getText().trim();
+        String strNota2 = inputP2.getText().trim();
+        String strFaltas = inputQtdFaltas.getText().trim();
+
+        if (codigoTurma.isEmpty() || codigoAluno.isEmpty() || strNota1.isEmpty() || strNota2.isEmpty() || strFaltas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        float nota1, nota2;
+        int qtdFaltas;
+
+        try {
+            nota1 = Float.parseFloat(strNota1);
+            nota2 = Float.parseFloat(strNota2);
+            qtdFaltas = Integer.parseInt(strFaltas);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Notas devem ser números válidos (use ponto, não vírgula) e faltas um número inteiro.", "Erro de entrada", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Controlador ctrl = Controlador.getInstancia();
+        boolean sucesso = ctrl.cadastrarAvaliacao(codigoAluno, codigoTurma, nota1, nota2, qtdFaltas);
+
+        if (sucesso) {
+            JOptionPane.showMessageDialog(this, "Avaliação registrada com sucesso.");
+            this.dispose(); // Fecha a janela, se desejar
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao registrar a avaliação. Verifique se a turma e o aluno existem. Ou se valores das notas ou de faltas são válidos", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane inputCodigoTurma;
+    private javax.swing.JTextPane inputMatricula;
+    private javax.swing.JTextPane inputP1;
+    private javax.swing.JTextPane inputP2;
+    private javax.swing.JTextPane inputQtdFaltas;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -168,10 +216,5 @@ public class IU_CadastroAvaliacao extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTextPane jTextPane3;
-    private javax.swing.JTextPane jTextPane4;
-    private javax.swing.JTextPane jTextPane5;
-    private javax.swing.JTextPane jTextPane6;
-    private javax.swing.JTextPane jTextPane7;
     // End of variables declaration//GEN-END:variables
 }

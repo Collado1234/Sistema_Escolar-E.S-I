@@ -187,7 +187,7 @@ public class ServicoCatalogoGeral {
         Disciplina disciplina = disciplinas.buscarPorCodigo(codigoDisciplina);
         if (disciplina == null) return "Disciplina não encontrada.";
 
-        AnaliseEstatisticaBase analise = new AnaliseDisciplina(disciplina, avaliacoes.listarAvaliacoes());
+        AnaliseEstatisticaBase analise = new AnaliseDIsciplina(disciplina, avaliacoes.listarAvaliacoes());
         return analise.gerarRelatorio();
     }
 
