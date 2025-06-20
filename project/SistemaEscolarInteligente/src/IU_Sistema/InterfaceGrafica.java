@@ -73,11 +73,11 @@ public class InterfaceGrafica extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 696, Short.MAX_VALUE)
+            .addGap(0, 1064, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
+            .addGap(0, 870, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Cadastro");
@@ -264,13 +264,13 @@ public class InterfaceGrafica extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 693, Short.MAX_VALUE))
+                .addGap(0, 325, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 724, Short.MAX_VALUE))
+                .addGap(0, 428, Short.MAX_VALUE))
         );
 
         pack();
@@ -354,35 +354,51 @@ public class InterfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_BuscarAvaliacaoPorTurma
 
     private void ListarAlunos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarAlunos
-        // TODO add your handling code here:
+        IU_ListarAlunos iu = new IU_ListarAlunos();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_ListarAlunos
 
     private void ListarTurma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarTurma
-        // TODO add your handling code here:
+        IU_ListarTurmas iu = new IU_ListarTurmas();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_ListarTurma
 
     private void ListarDisciplinas(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarDisciplinas
-        // TODO add your handling code here:
+        IU_LIstarDisciplinas iu = new IU_LIstarDisciplinas();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_ListarDisciplinas
 
     private void ListarAvaliacoes(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarAvaliacoes
-        // TODO add your handling code here:
+        IU_ListarAvaliacoes iu = new IU_ListarAvaliacoes();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_ListarAvaliacoes
 
     private void ListarTurmasPorAluno(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarTurmasPorAluno
-        // TODO add your handling code here:
+        IU_ListarTurmasPorAluno iu = new IU_ListarTurmasPorAluno();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_ListarTurmasPorAluno
 
     private void ListarTurmasPorDisciplina(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarTurmasPorDisciplina
-        // TODO add your handling code here:
+        IU_ListarTurmasPorDisciplina iu = new IU_ListarTurmasPorDisciplina();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_ListarTurmasPorDisciplina
 
     private void RelatorioPorDisciplina(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelatorioPorDisciplina
-        // TODO add your handling code here:
+        IU_RelatorioDisciplina iu = new IU_RelatorioDisciplina();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_RelatorioPorDisciplina
 
     private void RelatorioPorTurma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelatorioPorTurma
-        // TODO add your handling code here:
+        IU_RelatorioTurma iu = new IU_RelatorioTurma();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_RelatorioPorTurma
 
     /**
