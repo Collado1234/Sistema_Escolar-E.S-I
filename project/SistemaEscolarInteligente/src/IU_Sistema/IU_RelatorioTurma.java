@@ -37,6 +37,8 @@ public class IU_RelatorioTurma extends javax.swing.JInternalFrame {
         InputCodigo = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
 
+        setClosable(true);
+
         outputText.setColumns(20);
         outputText.setRows(5);
         jScrollPane2.setViewportView(outputText);
