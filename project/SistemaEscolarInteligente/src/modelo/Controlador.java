@@ -78,13 +78,13 @@ public class Controlador{
     }
 
 
-    public String buscarAlunoNome(String nome) {
-        Aluno aluno = servico.buscarAlunoNome(nome);
+    public String buscarAlunoNome(String nomeAluno) {
+        Aluno aluno = servico.buscarAlunoNome(nomeAluno);
         return aluno != null ? aluno.toString() : "Aluno não encontrado.";
     }
 
-    public String buscarDisciplina(String codigo) {
-        Disciplina d = servico.buscarDisciplina(codigo);
+    public String buscarDisciplina(String codigoDisciplina) {
+        Disciplina d = servico.buscarDisciplina(codigoDisciplina);
         return d != null ? d.toString() : "Disciplina não encontrada.";
     }
 
@@ -93,10 +93,15 @@ public class Controlador{
         return turma != null ? turma.toString() : "Turma não encontrada.";
     }
 
-    public List<String> buscarAlunosTurma(String codigo) {
-        return servico.buscarAlunosTurma(codigo).stream()
-                      .map(Aluno::toString)
-                      .toList();
+    public List<String> buscarAlunosTurma(String codigoTurma) {
+        try {
+            return servico.buscarAlunosTurma(codigoTurma).stream()
+                          .map(Aluno::toString)
+                          .toList();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return List.of();
+        }
     }
 
     public List<String> buscarAvaliacoesPorAluno(String codigoAluno) {

@@ -125,8 +125,12 @@ public class ServicoCatalogoGeral {
         return turmas.buscarPorCodigo(codigoTurma);
     }
     
-    public List<Aluno> buscarAlunosTurma(String codigo){
-        return turmas.buscarPorCodigo(codigo).getAlunos();
+    public List<Aluno> buscarAlunosTurma(String codigoTurma){
+        Turma turma = turmas.buscarPorCodigo(codigoTurma);
+        if (turma == null) {
+            throw new IllegalArgumentException("Turma não encontrada: " + codigoTurma);
+        }
+        return turma.getAlunos();
     }
     
     public List<Avaliacao> buscarAvaliacoesPorAluno(String codigoAluno) {
@@ -183,7 +187,7 @@ public class ServicoCatalogoGeral {
         Disciplina disciplina = disciplinas.buscarPorCodigo(codigoDisciplina);
         if (disciplina == null) return "Disciplina não encontrada.";
 
-        AnaliseEstatisticaBase analise = new AnaliseDIsciplina(disciplina, avaliacoes.listarAvaliacoes());
+        AnaliseEstatisticaBase analise = new AnaliseDisciplina(disciplina, avaliacoes.listarAvaliacoes());
         return analise.gerarRelatorio();
     }
 
