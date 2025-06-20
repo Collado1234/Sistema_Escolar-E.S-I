@@ -40,6 +40,8 @@ public class IU_CadastroAlunosEmTurma extends javax.swing.JInternalFrame {
         InputCodigo = new javax.swing.JTextPane();
         jButton2 = new javax.swing.JButton();
 
+        setClosable(true);
+
         jPanel1.setForeground(new java.awt.Color(30, 30, 30));
 
         jLabel4.setText("Código Turma:");
