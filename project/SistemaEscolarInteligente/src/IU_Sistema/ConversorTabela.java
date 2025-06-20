@@ -37,8 +37,8 @@ public class ConversorTabela {
             String codigo = partes[1].split("=")[1].replace("'", "");
             String disciplina = partes[2].split("=")[1];
             String qtdAlunos = partes[3].split("=")[1];
-            dados[i][0] = nome;
-            dados[i][1] = codigo;
+            dados[i][0] = codigo;
+            dados[i][1] = nome;           
             dados[i][2] = disciplina;
             dados[i][3] = qtdAlunos;
         }

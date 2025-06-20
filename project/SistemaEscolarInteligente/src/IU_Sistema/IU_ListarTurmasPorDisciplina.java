@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package IU_Sistema;
-
+import IU_Sistema.ConversorTabela;
+import javax.swing.table.DefaultTableModel;
+import modelo.Controlador;
+import java.util.List;
+/**
 /**
  *
  * @author renna
@@ -15,6 +19,12 @@ public class IU_ListarTurmasPorDisciplina extends javax.swing.JInternalFrame {
      */
     public IU_ListarTurmasPorDisciplina() {
         initComponents();
+        tabela1.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {},
+        new String [] {
+            "Código", "Nome","Carga Horária"
+        }
+        ));
     }
 
     /**
@@ -30,14 +40,14 @@ public class IU_ListarTurmasPorDisciplina extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tabela3 = new javax.swing.JTable();
+        tabela1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
 
         setClosable(true);
 
-        jLabel5.setText("Turmas Cadastradas:");
+        jLabel5.setText("Disciplinas Cadastradas:");
 
-        tabela3.setModel(new javax.swing.table.DefaultTableModel(
+        tabela1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -48,7 +58,7 @@ public class IU_ListarTurmasPorDisciplina extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(tabela3);
+        jScrollPane3.setViewportView(tabela1);
 
         jButton3.setText("Listar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -61,15 +71,6 @@ public class IU_ListarTurmasPorDisciplina extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel6)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,13 +80,22 @@ public class IU_ListarTurmasPorDisciplina extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(32, 32, 32))))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(180, 180, 180)
+                        .addComponent(jLabel5)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel5)
-                .addGap(29, 29, 29)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(jButton3)
@@ -115,16 +125,26 @@ public class IU_ListarTurmasPorDisciplina extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        preencherTabela();
+        preencherTabela();      
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void preencherTabela() {
+        Controlador ctrl = Controlador.getInstancia();
+        List<String> alunos = ctrl.listarAlunosFormatados(); // retorna List<String> com toString()
 
+        String[][] dados = ConversorTabela.parseAlunos(alunos);
+        String[] colunas = { "Código", "Nome","Carga Horária"};
+
+        DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
+        tabela1.setModel(modelo);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable tabela3;
+    private javax.swing.JTable tabela1;
     // End of variables declaration//GEN-END:variables
 }

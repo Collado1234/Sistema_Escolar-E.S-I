@@ -4,6 +4,10 @@
  */
 package IU_Sistema;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import modelo.Controlador;
+
 /**
  *
  * @author renna
@@ -15,6 +19,12 @@ public class IU_ListarTurmas extends javax.swing.JInternalFrame {
      */
     public IU_ListarTurmas() {
         initComponents();
+        tabela3.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {},
+        new String [] {
+            "Código", "Nome", "Disciplina", "Quantidade de Alunos"
+        }
+    ));
     }
 
     /**
@@ -117,7 +127,17 @@ public class IU_ListarTurmas extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         preencherTabela();
     }//GEN-LAST:event_jButton3ActionPerformed
+    
+    private void preencherTabela() {
+        Controlador ctrl = Controlador.getInstancia();
+        List<String> turmas = ctrl.listarTurmasFormatadas(); // retorna List<String> com toString()
 
+        String[][] dados = ConversorTabela.parseTurmas(turmas);
+        String[] colunas = { "Código", "Nome", "Disciplina", "Quantidade de Alunos" };
+
+        DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
+        tabela3.setModel(modelo);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

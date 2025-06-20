@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package IU_Sistema;
+import javax.swing.table.DefaultTableModel;
+import modelo.Controlador;
+import java.util.List;
 
 /**
  *
@@ -15,6 +18,13 @@ public class IU_ListarTurmasPorAluno extends javax.swing.JInternalFrame {
      */
     public IU_ListarTurmasPorAluno() {
         initComponents();
+        tabela1.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {},
+        new String [] {
+            "Código", "Nome", "Disciplina", "Quantidade de Alunos"
+        }
+    ));
+
     }
 
     /**
@@ -30,14 +40,14 @@ public class IU_ListarTurmasPorAluno extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tabela3 = new javax.swing.JTable();
+        tabela1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
 
         setClosable(true);
 
         jLabel5.setText("Turmas Cadastradas:");
 
-        tabela3.setModel(new javax.swing.table.DefaultTableModel(
+        tabela1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -48,7 +58,7 @@ public class IU_ListarTurmasPorAluno extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(tabela3);
+        jScrollPane3.setViewportView(tabela1);
 
         jButton3.setText("Listar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +127,17 @@ public class IU_ListarTurmasPorAluno extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         preencherTabela();
     }//GEN-LAST:event_jButton3ActionPerformed
+    
+    private void preencherTabela() {
+        Controlador ctrl = Controlador.getInstancia();
+        List<String> disciplinas = ctrl.listarDisciplinasFormatadas(); // retorna List<String> com toString()
+
+        String[][] dados = ConversorTabela.parseDisciplinas(disciplinas);
+        String[] colunas = { "Código", "Nome", "Disciplina", "Quantidade de Alunos" };
+
+        DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
+        tabela1.setModel(modelo);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -125,6 +146,6 @@ public class IU_ListarTurmasPorAluno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable tabela3;
+    private javax.swing.JTable tabela1;
     // End of variables declaration//GEN-END:variables
 }
