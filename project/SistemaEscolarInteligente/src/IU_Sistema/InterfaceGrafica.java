@@ -390,11 +390,15 @@ public class InterfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_ListarTurmasPorDisciplina
 
     private void RelatorioPorDisciplina(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelatorioPorDisciplina
-        // TODO add your handling code here:
+        IU_RelatorioDisciplina iu = new IU_RelatorioDisciplina();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_RelatorioPorDisciplina
 
     private void RelatorioPorTurma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelatorioPorTurma
-        // TODO add your handling code here:
+        IU_RelatorioTurma iu = new IU_RelatorioTurma();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_RelatorioPorTurma
 
     /**
