@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package IU_Sistema;
+import modelo.Controlador;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,14 +32,14 @@ public class IU_CadastroTurma extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        inputCodigoTurma = new javax.swing.JScrollPane();
+        inputCodigo = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        inputNomeTurma = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane3 = new javax.swing.JTextPane();
+        inputCodigoDisciplina = new javax.swing.JTextPane();
 
         setClosable(true);
 
@@ -49,15 +51,20 @@ public class IU_CadastroTurma extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Cadastrar Turma");
 
-        jScrollPane1.setViewportView(jTextPane1);
+        inputCodigoTurma.setViewportView(inputCodigo);
 
-        jScrollPane2.setViewportView(jTextPane2);
+        jScrollPane2.setViewportView(inputNomeTurma);
 
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Código da Disciplina:");
 
-        jScrollPane3.setViewportView(jTextPane3);
+        jScrollPane3.setViewportView(inputCodigoDisciplina);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -72,7 +79,7 @@ public class IU_CadastroTurma extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jButton1)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(inputCodigoTurma, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4))
                 .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -92,7 +99,7 @@ public class IU_CadastroTurma extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputCodigoTurma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -116,19 +123,40 @@ public class IU_CadastroTurma extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nome = inputNomeTurma.getText().trim();
+        String codigoTurma = inputCodigo.getText().trim();
+        String codigoDisciplina = inputCodigoDisciplina.getText().trim();
+
+        if (nome.isEmpty() || codigoTurma.isEmpty() || codigoDisciplina.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Controlador ctrl = Controlador.getInstancia();
+        boolean sucesso = ctrl.cadastrarTurma(nome, codigoTurma, codigoDisciplina);
+
+        if (sucesso) {
+            JOptionPane.showMessageDialog(this, "Turma cadastrada com sucesso.");
+            this.dispose(); // fecha a janela
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar turma. Código já existe ou disciplina não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane inputCodigo;
+    private javax.swing.JTextPane inputCodigoDisciplina;
+    private javax.swing.JScrollPane inputCodigoTurma;
+    private javax.swing.JTextPane inputNomeTurma;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
-    private javax.swing.JTextPane jTextPane3;
     // End of variables declaration//GEN-END:variables
 }
