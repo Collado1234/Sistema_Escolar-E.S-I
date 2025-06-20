@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package IU_Sistema;
+import modelo.Controlador;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,13 +33,13 @@ public class IU_CadastroDisciplina extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        inputCodigo = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        inputNome = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane3 = new javax.swing.JTextPane();
+        inputCargaHoraria = new javax.swing.JTextPane();
 
         setClosable(true);
 
@@ -49,15 +51,20 @@ public class IU_CadastroDisciplina extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Cadastrar Disciplina");
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(inputCodigo);
 
-        jScrollPane2.setViewportView(jTextPane2);
+        jScrollPane2.setViewportView(inputNome);
 
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Carga Horária");
 
-        jScrollPane3.setViewportView(jTextPane3);
+        jScrollPane3.setViewportView(inputCargaHoraria);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,8 +123,44 @@ public class IU_CadastroDisciplina extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String codigo = inputCodigo.getText().trim();
+        String nome = inputNome.getText().trim();
+        String strCargaHoraria = inputCargaHoraria.getText().trim();
+
+        if (codigo.isEmpty() || nome.isEmpty() || strCargaHoraria.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Campos obrigatórios", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int cargaHoraria;
+        try {
+            cargaHoraria = Integer.parseInt(strCargaHoraria);
+            if (cargaHoraria <= 0) {
+                JOptionPane.showMessageDialog(this, "A carga horária deve ser um número positivo.", "Valor inválido", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Carga horária deve ser um número inteiro válido.", "Erro de entrada", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Controlador ctrl = Controlador.getInstancia();
+        boolean sucesso = ctrl.cadastrarDisciplina(nome, codigo, cargaHoraria);
+
+        if (sucesso) {
+            JOptionPane.showMessageDialog(this, "Disciplina cadastrada com sucesso.");
+            this.dispose(); // Fecha a janela
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar disciplina. Código já existe.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane inputCargaHoraria;
+    private javax.swing.JTextPane inputCodigo;
+    private javax.swing.JTextPane inputNome;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -127,8 +170,5 @@ public class IU_CadastroDisciplina extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
-    private javax.swing.JTextPane jTextPane3;
     // End of variables declaration//GEN-END:variables
 }
