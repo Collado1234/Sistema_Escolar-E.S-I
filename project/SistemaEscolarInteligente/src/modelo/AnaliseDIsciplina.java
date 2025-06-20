@@ -11,10 +11,10 @@ import java.util.Map;
  *
  * @author renna
  */
-public class AnaliseDIsciplina extends AnaliseEstatisticaBase implements Interface_AnaliseEstatistica{
+public class AnaliseDisciplina extends AnaliseEstatisticaBase implements Interface_AnaliseEstatistica{
     private Disciplina disciplina;
 
-    public AnaliseDIsciplina(Disciplina disciplina, List<Avaliacao> avaliacoes) {
+    public AnaliseDisciplina(Disciplina disciplina, List<Avaliacao> avaliacoes) {
         super(avaliacoes);
         this.disciplina = disciplina;
     }
