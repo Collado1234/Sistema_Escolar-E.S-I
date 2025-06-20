@@ -81,8 +81,8 @@ public class Avaliacao implements Serializable{
         return "Avaliacao{" +
                "Aluno='" + aluno.getNome_Aluno() + " (" + aluno.getMatricula() + ")', " +
                "Turma='" + turma.getCodigoTurma()+ " - " + turma.getDisciplina().getNome() + "', " +
-               "Nota 1=" + prova1 + ", " +
-               "Nota 2=" + prova2 + ", " +
+               "Nota 1=" + String.format("%.2f", prova1) + ", " +
+               "Nota 2=" + String.format("%.2f", prova2) + ", " +
                "Média=" + getMedia() + ", " +
                "Frequência=" + String.format("%.2f", calcFrequencia()) + "%, " +
                "Faltas=" + total_faltas + ", " +
