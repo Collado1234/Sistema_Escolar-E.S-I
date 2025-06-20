@@ -312,31 +312,45 @@ public class InterfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_CadastrarAlunosEmTurma
 
     private void BuscarDisciplina(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarDisciplina
-        // TODO add your handling code here:
+        IU_BuscaDisciplina iu = new IU_BuscaDisciplina();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_BuscarDisciplina
 
     private void BuscarAluno(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarAluno
-        // TODO add your handling code here:
+        IU_BuscaAluno iu = new IU_BuscaAluno();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_BuscarAluno
 
     private void BuscarTurma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarTurma
-        // TODO add your handling code here:
+        IU_BuscaTurma iu = new IU_BuscaTurma();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_BuscarTurma
 
     private void BuscarAvaliacao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarAvaliacao
-        // TODO add your handling code here:
+        IU_BuscaAvaliacao iu = new IU_BuscaAvaliacao();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_BuscarAvaliacao
 
     private void BuscarAlunosDaTurma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarAlunosDaTurma
-        // TODO add your handling code here:
+        IU_BuscaAlunosTurma iu = new IU_BuscaAlunosTurma();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_BuscarAlunosDaTurma
 
     private void BuscarAvaliacoesDoAluno(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarAvaliacoesDoAluno
-        // TODO add your handling code here:
+        IU_BuscarAvaliacoesPorAluno iu = new IU_BuscarAvaliacoesPorAluno();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_BuscarAvaliacoesDoAluno
 
     private void BuscarAvaliacaoPorTurma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarAvaliacaoPorTurma
-        // TODO add your handling code here:
+        IU_BuscaAvaliacoesPorTurma iu = new IU_BuscaAvaliacoesPorTurma();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_BuscarAvaliacaoPorTurma
 
     private void ListarAlunos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarAlunos
