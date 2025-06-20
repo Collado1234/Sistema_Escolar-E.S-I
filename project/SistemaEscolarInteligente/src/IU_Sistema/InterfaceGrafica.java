@@ -30,7 +30,7 @@ public class InterfaceGrafica extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jLabel2 = new javax.swing.JLabel();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -67,8 +67,18 @@ public class InterfaceGrafica extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IU_Sistema/img/logo_eagle.png"))); // NOI18N
-        jLabel2.setText("jLabel2");
+        jDesktopPane1.setForeground(new java.awt.Color(62, 67, 76));
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 696, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 574, Short.MAX_VALUE)
+        );
 
         jMenu1.setText("Cadastro");
 
@@ -253,14 +263,14 @@ public class InterfaceGrafica extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 51, Short.MAX_VALUE))
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 693, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 701, Short.MAX_VALUE))
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 724, Short.MAX_VALUE))
         );
 
         pack();
@@ -268,27 +278,37 @@ public class InterfaceGrafica extends javax.swing.JFrame {
     
     //Cadastro Aluno
     private void CadastroAluno(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroAluno
-        // TODO add your handling code here:
+        IU_CadastroAlunos iuCadastroAluno = new IU_CadastroAlunos();
+        jDesktopPane1.add(iuCadastroAluno);
+        iuCadastroAluno.setVisible(true);
     }//GEN-LAST:event_CadastroAluno
     
     //Cadastro avaliação
     private void CadastrarAvaliacao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarAvaliacao
-        // TODO add your handling code here:
+        IU_CadastroAvaliacao iu = new IU_CadastroAvaliacao();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_CadastrarAvaliacao
     
     //Cadastro Turma
     private void CadastroTurmas(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroTurmas
-        // TODO add your handling code here:
+        IU_CadastroTurma iuCadastrarTurma = new IU_CadastroTurma();
+        jDesktopPane1.add(iuCadastrarTurma);
+        iuCadastrarTurma.setVisible(true);
     }//GEN-LAST:event_CadastroTurmas
     
     //Cadastro Disciplina
     private void CadastroDisciplinas(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroDisciplinas
-        // TODO add your handling code here:
+        IU_CadastroDisciplina iu = new IU_CadastroDisciplina();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_CadastroDisciplinas
     
     //Cadastrar Alunos em Turma
     private void CadastrarAlunosEmTurma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarAlunosEmTurma
-        // TODO add your handling code here:
+        IU_CadastroAlunosEmTurma iu = new IU_CadastroAlunosEmTurma();
+        jDesktopPane1.add(iu);
+        iu.setVisible(true);
     }//GEN-LAST:event_CadastrarAlunosEmTurma
 
     private void BuscarDisciplina(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarDisciplina
@@ -387,7 +407,7 @@ public class InterfaceGrafica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
