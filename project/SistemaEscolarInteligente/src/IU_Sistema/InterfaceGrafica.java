@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package IU_Sistema;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +31,13 @@ public class InterfaceGrafica extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -57,6 +65,11 @@ public class InterfaceGrafica extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        RemoverAluno = new javax.swing.JMenuItem();
+        RemoverTurma = new javax.swing.JMenuItem();
+        RemoverDisciplina = new javax.swing.JMenuItem();
+        RemoverDeTurma = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -65,6 +78,20 @@ public class InterfaceGrafica extends javax.swing.JFrame {
         jMenuItem3.setText("jMenuItem3");
 
         jMenuItem4.setText("jMenuItem4");
+
+        jMenuItem25.setText("jMenuItem25");
+
+        jMenuItem26.setText("jMenuItem26");
+
+        jMenuItem27.setText("jMenuItem27");
+
+        jMenuItem28.setText("jMenuItem28");
+
+        jMenu6.setText("File");
+        jMenuBar2.add(jMenu6);
+
+        jMenu7.setText("Edit");
+        jMenuBar2.add(jMenu7);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -263,6 +290,42 @@ public class InterfaceGrafica extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu9.setText("Remover");
+
+        RemoverAluno.setText("Aluno");
+        RemoverAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoverAlunoActionPerformed(evt);
+            }
+        });
+        jMenu9.add(RemoverAluno);
+
+        RemoverTurma.setText("Turma");
+        RemoverTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoverTurmaActionPerformed(evt);
+            }
+        });
+        jMenu9.add(RemoverTurma);
+
+        RemoverDisciplina.setText("Disciplina");
+        RemoverDisciplina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoverDisciplinaActionPerformed(evt);
+            }
+        });
+        jMenu9.add(RemoverDisciplina);
+
+        RemoverDeTurma.setText("Alunos de Turma");
+        RemoverDeTurma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoverDeTurmaActionPerformed(evt);
+            }
+        });
+        jMenu9.add(RemoverDeTurma);
+
+        jMenuBar1.add(jMenu9);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -408,6 +471,34 @@ public class InterfaceGrafica extends javax.swing.JFrame {
         iu.setVisible(true);
     }//GEN-LAST:event_RelatorioPorTurma
 
+    private void RemoverAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverAlunoActionPerformed
+        JOptionPane.showMessageDialog(this, 
+        "Função em desenvolvimento!\nDisponível em um próximo ciclo 😄", 
+        "Indisponível", 
+        JOptionPane.INFORMATION_MESSAGE);// TODO add your handling code here:
+    }//GEN-LAST:event_RemoverAlunoActionPerformed
+
+    private void RemoverTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverTurmaActionPerformed
+        JOptionPane.showMessageDialog(this, 
+        "Função em desenvolvimento!\nDisponível em um próximo ciclo 😄", 
+        "Indisponível", 
+        JOptionPane.INFORMATION_MESSAGE);// TODO add your handling code here:
+    }//GEN-LAST:event_RemoverTurmaActionPerformed
+
+    private void RemoverDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverDisciplinaActionPerformed
+        JOptionPane.showMessageDialog(this, 
+        "Função em desenvolvimento!\nDisponível em um próximo ciclo 😄", 
+        "Indisponível", 
+        JOptionPane.INFORMATION_MESSAGE);// TODO add your handling code here:
+    }//GEN-LAST:event_RemoverDisciplinaActionPerformed
+
+    private void RemoverDeTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverDeTurmaActionPerformed
+       JOptionPane.showMessageDialog(this, 
+        "Função em desenvolvimento!\nDisponível em um próximo ciclo 😄", 
+        "Indisponível", 
+        JOptionPane.INFORMATION_MESSAGE);// TODO add your handling code here:
+    }//GEN-LAST:event_RemoverDeTurmaActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -444,13 +535,21 @@ public class InterfaceGrafica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem RemoverAluno;
+    private javax.swing.JMenuItem RemoverDeTurma;
+    private javax.swing.JMenuItem RemoverDisciplina;
+    private javax.swing.JMenuItem RemoverTurma;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
@@ -468,6 +567,10 @@ public class InterfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
