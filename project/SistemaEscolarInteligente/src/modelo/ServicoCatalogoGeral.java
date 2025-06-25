@@ -78,7 +78,7 @@ public class ServicoCatalogoGeral {
         disciplinas.adicionarDisciplina(disciplina);        
         PersistenciaRegistroDisciplinas.salvar(disciplinas);
     }
-    
+           
     public List<String> adicionarAlunosEmTurma(String codigoTurma, List<String> matriculas) {
         List<String> erros = new ArrayList<>();
         Turma turma = turmas.buscarPorCodigo(codigoTurma);
@@ -95,8 +95,11 @@ public class ServicoCatalogoGeral {
                 erros.add("Aluno com matrícula " + matricula + " não encontrado.");
                 continue;
             }
+            
+            boolean jaMatriculado = turma.getAlunos().stream()
+            .anyMatch(a -> a.getMatricula().equals(matricula.trim()));
 
-            if (turma.getAlunos().contains(aluno)) {
+            if (jaMatriculado) {
                 erros.add("Aluno com matrícula " + matricula + " já está na turma.");
                 continue;
             }
