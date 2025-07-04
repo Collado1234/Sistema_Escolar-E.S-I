@@ -19,60 +19,20 @@ public class Controlador{
     }
     
     // ------------------- Cadastros -------------------
-    public boolean cadastrarAluno(String nome, String matricula) {
-        try {
-            Aluno aluno = new Aluno(nome, matricula);
-            servico.adicionarAluno(aluno);
-            return true;
-        }catch(IllegalArgumentException e){
-            return false;
-        }
+    public boolean cadastrarAluno(String nome, String matricula) {      
+        return servico.adicionarAluno(nome,matricula);
     }
     
-    public boolean cadastrarDisciplina(String nome, String codigoDisciplina, int cargaHoraria) {
-        try{
-            Disciplina disciplina = new Disciplina(nome,codigoDisciplina,cargaHoraria);
-            servico.adicionarDisciplina(disciplina);
-            return true;
-        }catch(IllegalArgumentException e){
-            return false;
-        }       
+    public boolean cadastrarDisciplina(String nome, String codigoDisciplina, int cargaHoraria) {                
+        return servico.adicionarDisciplina(nome,codigoDisciplina, cargaHoraria);           
     }
     
-    public boolean cadastrarTurma(String nomeTurma, String codigoTurma, String codigoDisciplina) {
-        try {
-            // Verifica se a disciplina existe usando o serviço
-            Disciplina disciplina = servico.buscarDisciplina(codigoDisciplina);
-            if (disciplina == null) return false;
-
-            // Cria a turma
-            Turma turma = new Turma(nomeTurma, codigoTurma, disciplina);
-
-            // Tenta adicionar via serviço
-            servico.adicionarTurma(turma);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+    public boolean cadastrarTurma(String nomeTurma, String codigoTurma, String codigoDisciplina) {        
+        return servico.adicionarTurma(nomeTurma, codigoTurma, codigoDisciplina);
     }
     
     public boolean cadastrarAvaliacao(String codAluno, String codTurma, float nota1, float nota2, int faltas) {
-        try {
-            Aluno aluno = servico.buscarAlunoPorMatricula(codAluno);
-            Turma turma = servico.buscarTurmaPorCodigo(codTurma);
-
-            if (aluno == null || turma == null) {
-                System.out.println("Aluno ou turma não encontrados.");
-                return false;
-            }
-
-            Avaliacao avaliacao = new Avaliacao(aluno, turma, nota1, nota2, faltas);
-            servico.adicionarAvaliacao(avaliacao);
-            return true;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erro ao cadastrar avaliação: " + e.getMessage());
-            return false;
-        }
+        return servico.adicionarAvaliacao(codAluno, codTurma, nota1, nota2, faltas);
     }
     
     public List<String> cadastrarAlunosEmTurma(String codigoTurma, List<String> matriculas) {

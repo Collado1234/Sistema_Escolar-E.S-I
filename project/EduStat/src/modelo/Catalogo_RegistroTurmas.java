@@ -22,8 +22,25 @@ public class Catalogo_RegistroTurmas implements Serializable {
         this.turmas = new ArrayList<>();
     }
 
-    public void adicionarTurma(Turma turma) {
-        this.turmas.add(turma);
+    public boolean adicionarTurma(String nomeTurma, String codigoTurma, Disciplina disciplina) {
+        try{
+            Turma t = criarTurma(nomeTurma, codigoTurma, disciplina);
+            
+            if(t == null){
+                throw new IllegalArgumentException("Turma ja existe no registro");
+            }
+            
+            this.turmas.add(t);
+            return true;
+        }catch(IllegalArgumentException e){
+            return false;
+        }   
+    }
+    
+    private Turma criarTurma(String nomeTurma, String codigoTurma, Disciplina disciplina){
+        if(buscarPorCodigo(codigoTurma)!= null) return null;
+        
+        return new Turma(nomeTurma, codigoTurma, disciplina);
     }
 
     public List<Turma> listarTurmas() {
