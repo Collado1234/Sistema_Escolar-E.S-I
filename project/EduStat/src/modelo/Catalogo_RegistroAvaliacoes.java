@@ -21,8 +21,14 @@ public class Catalogo_RegistroAvaliacoes implements Serializable {
         this.avaliacoes = new ArrayList<>();
     }
 
-    public void adicionarAvaliacao(Avaliacao avaliacao) {
-        this.avaliacoes.add(avaliacao);
+    public boolean adicionarAvaliacao(Aluno aluno, Turma turma,float nota1,float nota2,int total_faltas) {
+        Avaliacao av = criarAvaliacao(aluno, turma, nota1, nota2, total_faltas);
+        if(av == null){
+            return false;
+        }else{
+            this.avaliacoes.add(av);
+            return true;
+        }
     }
 
     public List<Avaliacao> listarAvaliacoes() {
@@ -62,5 +68,13 @@ public class Catalogo_RegistroAvaliacoes implements Serializable {
 
     public void limparAvaliacoes() {
         this.avaliacoes.clear();
+    }
+    
+    private Avaliacao criarAvaliacao(Aluno aluno, Turma turma,float nota1,float nota2,int total_faltas){
+        if(buscarPorAlunoETurma(aluno.getMatricula(), turma.getCodigoTurma()).isEmpty()){
+            return new Avaliacao(aluno,turma,nota1,nota2,total_faltas);
+        }else{
+            return null;
+        }
     }
 }

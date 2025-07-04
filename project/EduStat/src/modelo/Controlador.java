@@ -19,14 +19,8 @@ public class Controlador{
     }
     
     // ------------------- Cadastros -------------------
-    public boolean cadastrarAluno(String nome, String matricula) {
-        try {
-            Aluno aluno = new Aluno(nome, matricula);
-            servico.adicionarAluno(aluno);
-            return true;
-        }catch(IllegalArgumentException e){
-            return false;
-        }
+    public boolean cadastrarAluno(String nome, String matricula) {      
+        return servico.adicionarAluno(nome,matricula);
     }
     
     public boolean cadastrarDisciplina(String nome, String codigoDisciplina, int cargaHoraria) {

@@ -28,13 +28,10 @@ public class ServicoCatalogoGeral {
     }
     
     //---------Cadastros---------
-    public void adicionarAluno(Aluno aluno){
-        if (alunos.buscarAlunoPorMatricula(aluno.getMatricula()) != null) {
-            throw new IllegalArgumentException("Já existe um aluno com essa matrícula.");
-        }
-
-        alunos.adicionarAluno(aluno);
+    public boolean adicionarAluno(String nome, String matricula){
+        boolean flag = alunos.adicionarAluno(nome,matricula);     
         PersistenciaRegistroAlunos.salvar(alunos); // ou encapsular isso dentro do catálogo, como já está
+        return flag;
     }
     
     public void adicionarTurma(Turma turma){
