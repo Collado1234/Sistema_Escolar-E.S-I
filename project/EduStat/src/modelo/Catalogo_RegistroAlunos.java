@@ -21,8 +21,12 @@ public class Catalogo_RegistroAlunos implements Serializable {
         this.alunos = new ArrayList<>();
     }
 
-    public void adicionarAluno(Aluno aluno) {
-        alunos.add(aluno);
+    public boolean adicionarAluno(String nome, String matricula) {
+        Aluno a = criarAluno(nome, matricula);
+        if(a == null) return false;
+        else alunos.add(a); 
+        return true;
+        
     }
 
     public List<Aluno> getAlunos() {
@@ -45,5 +49,15 @@ public class Catalogo_RegistroAlunos implements Serializable {
             }
         }
         return null;
+    }
+    
+    private Aluno criarAluno(String nome, String matricula){
+        Aluno a = buscarAlunoPorMatricula(matricula);
+        if(a != null){
+            return null;
+        }else{
+            Aluno novoAluno = new Aluno (nome,matricula);         
+            return novoAluno;
+        }
     }
 }
