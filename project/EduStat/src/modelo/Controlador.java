@@ -51,22 +51,7 @@ public class Controlador{
     }
     
     public boolean cadastrarAvaliacao(String codAluno, String codTurma, float nota1, float nota2, int faltas) {
-        try {
-            Aluno aluno = servico.buscarAlunoPorMatricula(codAluno);
-            Turma turma = servico.buscarTurmaPorCodigo(codTurma);
-
-            if (aluno == null || turma == null) {
-                System.out.println("Aluno ou turma não encontrados.");
-                return false;
-            }
-
-            Avaliacao avaliacao = new Avaliacao(aluno, turma, nota1, nota2, faltas);
-            servico.adicionarAvaliacao(avaliacao);
-            return true;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erro ao cadastrar avaliação: " + e.getMessage());
-            return false;
-        }
+        return servico.adicionarAvaliacao(codAluno, codTurma, nota1, nota2, faltas);
     }
     
     public List<String> cadastrarAlunosEmTurma(String codigoTurma, List<String> matriculas) {

@@ -42,31 +42,46 @@ public class ServicoCatalogoGeral {
         PersistenciaRegistroTurmas.salvar(turmas);
     }
     
-    public void adicionarAvaliacao(Avaliacao avaliacao) {
-        // Verifica se já existe avaliação do aluno na turma
-        boolean existe = avaliacoes.listarAvaliacoes().stream()
-            .anyMatch(a -> a.getAluno().equals(avaliacao.getAluno())
-                       && a.getTurma().equals(avaliacao.getTurma()));
-        if (existe) {
-            throw new IllegalArgumentException("Já existe uma avaliação para esse aluno na turma.");
+    public boolean adicionarAvaliacao(String codAluno, String codTurma, float n1, float n2, int faltas) {
+        try {
+            // Busca entidades pelos códigos
+            Aluno aluno = buscarAlunoPorMatricula(codAluno);
+            Turma turma = buscarTurmaPorCodigo(codTurma);
+
+            // Validação de existência
+            if (aluno == null || turma == null) {
+                System.out.println("Aluno ou turma não encontrados.");
+                return false;
+            }
+
+            // Validação de notas
+            if (n1 < 0 || n1 > 10 || n2 < 0 || n2 > 10) {
+                throw new IllegalArgumentException("Notas devem estar entre 0 e 10.");
+            }
+
+            // Validação de faltas
+            int cargaHoraria = turma.getDisciplina().getCarga_horaria();
+            if (faltas < 0 || faltas > cargaHoraria) {
+                throw new IllegalArgumentException("Faltas inválidas para a carga horária da disciplina.");
+            }
+
+            // Tenta adicionar a avaliação. O catálogo decide se já existe ou não.
+            boolean sucesso = avaliacoes.adicionarAvaliacao(aluno, turma, n1, n2, faltas);
+            if (!sucesso) {
+                throw new IllegalArgumentException("Já existe uma avaliação para esse aluno na turma.");
+            }
+
+            // Persistência
+            PersistenciaRegistroAvaliacoes.salvar(avaliacoes);
+            return true;
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao cadastrar avaliação: " + e.getMessage());
+            return false;
         }
-
-        float n1 = avaliacao.getProva1();
-        float n2 = avaliacao.getProva2();
-        int faltas = avaliacao.getTotal_faltas();
-        int cargaHoraria = avaliacao.getTurma().getDisciplina().getCarga_horaria();
-
-        if (n1 < 0 || n1 > 10 || n2 < 0 || n2 > 10) {
-            throw new IllegalArgumentException("Notas devem estar entre 0 e 10.");
-        }
-
-        if (faltas < 0 || faltas > cargaHoraria) {
-            throw new IllegalArgumentException("Faltas inválidas para a carga horária da disciplina.");
-        }
-
-        avaliacoes.adicionarAvaliacao(avaliacao);
-        PersistenciaRegistroAvaliacoes.salvar(avaliacoes);
     }
+
+        
 
     public void adicionarDisciplina(Disciplina disciplina){
         if (disciplinas.buscarPorCodigo(disciplina.getCodigo()) != null) {

@@ -23,7 +23,7 @@ public class Catalogo_RegistroAvaliacoes implements Serializable {
 
     public boolean adicionarAvaliacao(Aluno aluno, Turma turma,float nota1,float nota2,int total_faltas) {
         Avaliacao av = criarAvaliacao(aluno, turma, nota1, nota2, total_faltas);
-        if(av == null){
+        if(av == null){        
             return false;
         }else{
             this.avaliacoes.add(av);
