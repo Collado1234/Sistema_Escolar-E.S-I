@@ -34,12 +34,18 @@ public class ServicoCatalogoGeral {
         return flag;
     }
     
-    public void adicionarTurma(Turma turma){
-        if (turmas.buscarPorCodigo(turma.getCodigoTurma()) != null) {
-            throw new IllegalArgumentException("Já existe uma turma com essa matrícula.");
+    public boolean adicionarTurma(String nomeTurma, String codigoTurma, String codigoDisciplina){
+        Disciplina disc = buscarDisciplina(codigoDisciplina);
+        if(disc == null){
+            throw new IllegalArgumentException("Disciplina nao encontrada");
         }
-        turmas.adicionarTurma(turma);
+        
+        if(!turmas.adicionarTurma(nomeTurma, codigoTurma, disc)){
+            return false;
+        }    
+        
         PersistenciaRegistroTurmas.salvar(turmas);
+        return true;
     }
     
     public boolean adicionarAvaliacao(String codAluno, String codTurma, float n1, float n2, int faltas) {

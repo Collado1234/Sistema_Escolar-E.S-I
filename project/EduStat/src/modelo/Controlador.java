@@ -23,30 +23,12 @@ public class Controlador{
         return servico.adicionarAluno(nome,matricula);
     }
     
-    public boolean cadastrarDisciplina(String nome, String codigoDisciplina, int cargaHoraria) {
-        try{          
-            servico.adicionarDisciplina(nome,codigoDisciplina, cargaHoraria);
-            return true;
-        }catch(IllegalArgumentException e){
-            return false;
-        }       
+    public boolean cadastrarDisciplina(String nome, String codigoDisciplina, int cargaHoraria) {                
+        return servico.adicionarDisciplina(nome,codigoDisciplina, cargaHoraria);           
     }
     
-    public boolean cadastrarTurma(String nomeTurma, String codigoTurma, String codigoDisciplina) {
-        try {
-            // Verifica se a disciplina existe usando o serviço
-            Disciplina disciplina = servico.buscarDisciplina(codigoDisciplina);
-            if (disciplina == null) return false;
-
-            // Cria a turma
-            Turma turma = new Turma(nomeTurma, codigoTurma, disciplina);
-
-            // Tenta adicionar via serviço
-            servico.adicionarTurma(turma);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+    public boolean cadastrarTurma(String nomeTurma, String codigoTurma, String codigoDisciplina) {        
+        return servico.adicionarTurma(nomeTurma, codigoTurma, codigoDisciplina);
     }
     
     public boolean cadastrarAvaliacao(String codAluno, String codTurma, float nota1, float nota2, int faltas) {
