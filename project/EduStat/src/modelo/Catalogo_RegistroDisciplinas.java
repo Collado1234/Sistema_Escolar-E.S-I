@@ -20,8 +20,18 @@ public class Catalogo_RegistroDisciplinas implements Serializable {
         this.disciplinas = new ArrayList<>();
     }
 
-    public void adicionarDisciplina(Disciplina disciplina) {
-        this.disciplinas.add(disciplina);
+    public boolean adicionarDisciplina(String nome, String codigo, int carga_horaria) {
+        Disciplina disc = criarDisciplina(nome, codigo, carga_horaria);
+        try{
+            if(disc == null){
+                throw new IllegalArgumentException("Disciplina já existe no registro");
+            }     
+            this.disciplinas.add(disc);
+            return true;
+        }catch (IllegalArgumentException e) {
+            System.out.println("Erro ao cadastrar disciplina: " + e.getMessage());
+            return false;
+        }                    
     }
 
     public List<Disciplina> listarDisciplinas() {
@@ -37,6 +47,12 @@ public class Catalogo_RegistroDisciplinas implements Serializable {
 
     public void limparDisciplinas() {
         this.disciplinas.clear();
+    }
+    
+    private Disciplina criarDisciplina(String nome, String codigo, int carga_horaria){
+        if(buscarPorCodigo(codigo)!=null) return null;
+        
+        return new Disciplina(nome, codigo);                 
     }
 }
 

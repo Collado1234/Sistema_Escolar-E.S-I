@@ -25,6 +25,8 @@ public class Catalogo_RegistroTurmas implements Serializable {
     public void adicionarTurma(Turma turma) {
         this.turmas.add(turma);
     }
+    
+    private
 
     public List<Turma> listarTurmas() {
         return new ArrayList<>(turmas);

@@ -83,13 +83,28 @@ public class ServicoCatalogoGeral {
 
         
 
-    public void adicionarDisciplina(Disciplina disciplina){
-        if (disciplinas.buscarPorCodigo(disciplina.getCodigo()) != null) {
-            throw new IllegalArgumentException("Já existe uma disciplina com esse codigo.");
+    public boolean adicionarDisciplina(String nome, String codigo, int cargaHoraria) {
+        try {
+            // Validação de carga horária
+            if (cargaHoraria <= 0) {
+                throw new IllegalArgumentException("Carga horária inválida. Deve ser maior que zero.");
+            }
+
+            // Validação de código duplicado no catálogo
+            if (!disciplinas.adicionarDisciplina(nome, codigo, cargaHoraria)) {
+                throw new IllegalArgumentException("Já existe uma disciplina com esse código.");
+            }
+
+            // Persistência
+            PersistenciaRegistroDisciplinas.salvar(disciplinas);
+            return true;
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao cadastrar disciplina: " + e.getMessage());
+            return false;
         }
-        disciplinas.adicionarDisciplina(disciplina);        
-        PersistenciaRegistroDisciplinas.salvar(disciplinas);
     }
+
            
     public List<String> adicionarAlunosEmTurma(String codigoTurma, List<String> matriculas) {
         List<String> erros = new ArrayList<>();

@@ -24,9 +24,8 @@ public class Controlador{
     }
     
     public boolean cadastrarDisciplina(String nome, String codigoDisciplina, int cargaHoraria) {
-        try{
-            Disciplina disciplina = new Disciplina(nome,codigoDisciplina,cargaHoraria);
-            servico.adicionarDisciplina(disciplina);
+        try{          
+            servico.adicionarDisciplina(nome,codigoDisciplina, cargaHoraria);
             return true;
         }catch(IllegalArgumentException e){
             return false;
