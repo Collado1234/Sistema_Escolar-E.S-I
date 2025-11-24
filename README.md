@@ -1,167 +1,89 @@
-# 🛒 TechOrder — Sistema de Gestão de Pedidos e Estoque  
-📦 *Projeto desenvolvido para a disciplina de Banco de Dados 2*
+# Text2SQL - Interface de Banco de Dados via Linguagem Natural
 
-**Alunos:** Seu Nome, Nome do Seu Amigo  
-**Data:** [Data de Hoje]  
-
----
-
-## 📘 1. Introdução e Objetivo
-
-O **TechOrder** é uma aplicação *Full Stack* para gerenciamento de vendas e estoque de um e-commerce de produtos eletrônicos.
-
-Diferente de um simples CRUD, o foco do projeto é **garantir integridade, atomicidade e consistência dos dados** utilizando recursos avançados de SGBDs relacionais, como:
-
-- Stored Procedures  
-- Triggers  
-- Transações ACID  
-
-Toda a lógica crítica de negócios — especialmente o processamento de pedidos — é executada *no próprio banco de dados*, garantindo que as regras sejam preservadas independentemente da interface utilizada.
+**Disciplina:** Banco de Dados 2  
+**Alunos:** Raphael Leiva e Rennan Furlaneto Collado  
+**Data:** 24/11/2025  
 
 ---
 
-## 📚 2. Definição do Domínio
+## 1. Introdução e Objetivo
 
-O sistema simula o back-office e o fluxo de vendas de uma loja de informática. O principal problema resolvido é a **concorrência em vendas de produtos com estoque limitado**.
+O projeto NaturalQuery consiste no desenvolvimento de uma aplicação web capaz de democratizar o acesso a bancos de dados relacionais. A aplicação atua como uma interface inteligente que traduz perguntas feitas em linguagem natural (Português/Inglês) para consultas SQL sintaticamente corretas e executáveis.
 
-### Cenários contemplados:
-
-- Cliente tenta comprar um produto que acabou de esgotar.  
-- Alterações de preços precisam ser rastreadas para evitar fraudes internas.  
-- Um pedido **só pode ser criado** se *todos* os itens tiverem estoque disponível (atomicidade).  
+O objetivo principal é eliminar a barreira técnica da linguagem SQL para usuários finais (gestores, analistas), permitindo que eles interajam com seus próprios dados (arquivos .sqlite ou scripts .sql) através de uma interface de chat intuitiva. O sistema demonstra a integração avançada entre Frontend, Backend, SGBDs Relacionais e Modelos de Linguagem (LLMs).
 
 ---
 
-## 🗂️ 3. Estrutura de Dados (Modelagem)
+## 2. Definição do Domínio e Problema
 
-O banco segue rigorosamente a **Terceira Forma Normal (3FN)**.  
-As principais entidades são:
-
-### 🧑‍💼 Clientes
-Armazena informações dos compradores.
-
-### 🖥️ Produtos
-- Nome  
-- Preço atual  
-- Quantidade em estoque  
-
-### 🧾 Pedidos
-Registra o cabeçalho da venda:  
-- Data  
-- Cliente  
-- Valor total  
-- Status  
-
-### 📦 ItensPedido
-Tabela associativa entre pedidos e produtos, contendo:  
-- Quantidade vendida  
-- Preço no momento da compra  
-
-### 📝 LogPrecos (Auditoria)
-Registra o histórico de alteração de preços (via Trigger).
+O domínio da aplicação é a Administração de Dados e Business Intelligence (BI).  
+Em sistemas tradicionais, a extração de informações gerenciais exige conhecimento técnico em SQL para realizar JOINs, agrupações e filtros. O NaturalQuery resolve o problema da acessibilidade aos dados, automatizando a construção da query baseada na estrutura (schema) do banco de dados fornecido pelo usuário.
 
 ---
 
-## ⚙️ 4. Regras de Negócio e Implementação no SGBD
+## 3. Arquitetura da Solução
 
-A robustez do sistema está baseada em três elementos principais:
+A aplicação foi desenvolvida utilizando uma arquitetura moderna e desacoplada.
 
----
+### 3.1. Frontend (Next.js & React)
 
-### 🔧 4.1 Stored Procedure: `sp_RealizarPedido`
-Responsável por orquestrar toda a operação crítica de venda.
+Responsável pela interação com o usuário, gerenciamento de estado local e processamento inicial de arquivos.
 
-#### Funcionalidades:
-- Recebe o cliente e a lista de produtos/quantidades  
-- Inicia uma transação  
-- Verifica estoque  
-- Cria o pedido  
-- Insere itens  
-- Atualiza estoque  
-- Calcula total  
-- Executa `COMMIT` ou `ROLLBACK` em caso de erro  
+**Gerenciamento de Schemas:**  
+Utiliza o localStorage e IndexedDB para persistir os schemas dos bancos de dados do usuário no navegador, evitando re-uploads constantes.
 
-🔒 **Garante atomicidade:** ou tudo é feito, ou nada é feito.
+**Processamento Local (Edge):**  
+Implementa lógica para ler arquivos .sqlite (via WebAssembly com sql.js) e arquivos .sql (via FileReader), extraindo apenas a estrutura DDL (CREATE TABLE) necessária.
 
 ---
 
-### 📝 4.2 Trigger: `trg_AuditoriaAlteracaoPreco`
-Controla histórico de preços para segurança.
+### 3.2. Backend & Integração AI (Server Actions & LangChain)
 
-#### Detalhes:
-- Executado após `UPDATE` em *Produtos*  
-- Registra no LogPrecos:  
-  - Preço antigo  
-  - Preço novo  
-  - Data/hora  
-  - Usuário  
+Responsável pela orquestração entre a intenção do usuário e a geração de código.
+
+- **Engenharia de Prompt:** Constrói instruções dinâmicas contendo o perfil do especialista SQL, o schema do banco selecionado e a pergunta do usuário.  
+- **API de LLM:** Integração com modelos generativos (OpenAI/Groq/Llama) para realizar a tradução semântica.  
+- **Validação:** Recebe a string SQL gerada e a entrega ao frontend para execução ou exibição.
 
 ---
 
-### 🚫 4.3 Trigger: `trg_ValidarEstoqueMinimo`
-Evita que qualquer operação deixe o estoque negativo.
+## 4. Regras de Negócio e Implementação Técnica
 
-- Executado **antes** de atualizar o estoque  
-- Impede a operação  
-- Lança exceção personalizada capturada pelo backend  
+Diferente de um sistema transacional comum, as regras de negócio deste projeto focam na integridade da interpretação dos dados e na otimização de contexto.
 
----
+### 4.1. Regra de Extração e Limpeza de Schema (Data Parsing)
 
-## 🏗️ 5. Arquitetura da Aplicação
+Para garantir que a IA compreenda o banco de dados sem exceder limites de processamento ou custo, foi implementado um algoritmo rigoroso de extração:
 
-O sistema é dividido em três camadas principais:
-
----
-
-### 🎨 5.1 Frontend — *Next.js*
-
-Telass:
-- Listagem de produtos  
-- Carrinho de compras  
-- Tela administrativa  
-- Relatórios de auditoria  
-
-O frontend apenas exibe mensagens retornadas pelo banco (sucesso/erro).
+- **Entrada:** O sistema aceita dumps completos de banco de dados (incluindo grandes volumes de `INSERT INTO`).  
+- **Processamento:** Um algoritmo de Regex filtra o conteúdo, descartando dados sensíveis e volumosos, mantendo estritamente os comandos `CREATE TABLE` e `ALTER TABLE`.  
+- **Justificativa:** Garante que a IA receba apenas a estrutura relacional essencial para montar JOINs corretamente, sem expor dados reais.
 
 ---
 
-### 🐍 5.2 Backend — *Python (API)*
+### 4.2. Persistência e Versionamento de Contexto
 
-Backend propositalmente fino (“Thin Controller”).  
-Responsável por:
+O sistema implementa uma camada de armazenamento cliente (Zustand + IndexedDB) que permite ao usuário alternar entre diferentes contextos de banco de dados (ex: “Banco Financeiro” vs “Banco de Estoque”) instantaneamente.
 
-- Receber JSON do frontend  
-- Invocar a Stored Procedure  
-- Tratar exceções do banco  
-- Retornar erros como respostas HTTP  
+A regra garante que uma pergunta feita no contexto do "Banco A" não sofra alucinações baseadas no schema do "Banco B".
 
 ---
 
-### 🗄️ 5.3 Integração Aplicação ↔ Banco
+### 4.3. Execução Segura (Sandboxing)
 
-As regras **não dependem da aplicação**.  
-Mesmo se alguém inserir um pedido manualmente via SQL:
-
-- Estoque será atualizado  
-- Auditoria funcionará  
-- Atomicidade garantida  
-
-Tudo porque a lógica está no SGBD.
+Para bancos SQLite, a execução da query gerada ocorre inteiramente no navegador do cliente utilizando uma máquina virtual WASM.  
+Isso garante que os dados do usuário nunca sejam enviados para um servidor backend tradicional, preservando privacidade total.
 
 ---
 
-## ✅ 6. Conclusão
+## 5. Cenários de Teste e Validação
 
-O **TechOrder** demonstra como recursos avançados de SGBDs relacionais — Procedures, Triggers e Transações — elevam a confiabilidade e segurança de um sistema comercial.
+O sistema foi validado utilizando o banco de exemplo *Chinook*, que contém relacionamentos complexos (1:N e N:N).
 
-A lógica crítica sendo executada no banco:
+### Cenários Executados
 
-- Evita inconsistências  
-- Garante integridade mesmo sob alta concorrência  
-- Permite auditoria confiável  
-- Reduz riscos de fraudes e erros de implementação  
-
-O projeto cumpre plenamente os requisitos da disciplina de Banco de Dados 2 e exemplifica boas práticas de desenvolvimento integrado com SGBDs.
-
----
-
+#### • Consultas Simples  
+**Input:** “Liste todos os clientes que moram no Brasil.”  
+**Output Esperado:**  
+```sql
+SELECT * FROM Customer WHERE Country = 'Brazil';
